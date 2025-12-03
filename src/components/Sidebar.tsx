@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export default function Sidebar() {
+export function Sidebar() {
   return (
     <div style={{ width: '200px', height: '100vh', background: '#f4f4f4', padding: '1rem' }}>
       <h3>Menu</h3>
@@ -15,7 +15,6 @@ export default function Sidebar() {
             Gastos Padrões
           </Link>
         </li>
-        {/* Adicione mais links aqui */}
         <li>
           <button onClick={() => console.log('Logout')} style={{ width: '100%', marginTop: '20px' }}>
             Sair
