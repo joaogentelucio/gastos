@@ -1,41 +1,41 @@
-usuarios (
-	id_usuario
-	nome
-	email
-	senha
-	foto_perfil
-	data_ultimo_login
-	data_ultima_revisao_geral
-)
+CREATE TABLE USUARIOS (
+    ID_USUARIO SERIAL PRIMARY KEY,
+    NOME VARCHAR(150) NOT NULL,
+    EMAIL VARCHAR(150) NOT NULL UNIQUE,
+    SENHA VARCHAR(255) NOT NULL, 
+    FOTO_PERFIL TEXT, 
+    DATA_ULTIMO_LOGIN TIMESTAMP WITHOUT TIME ZONE,
+    DATA_ULTIMA_REVISAO_GERAL DATE
+);
 
-despesas (
-	id_despesa
-	nome
-	valor_total
-	data_despesa
-	tipo_despesa /*fixa/adicional*/
-	tipo_transacao (credito/debito) 
-	parcelas_totais
-	data_primeira_parcela
-	fk_id_usuario
-	fk_id_categoria
-	fk_id_forma_pagamento
-)
+CREATE TABLE DESPESAS (
+    ID_DESPESA SERIAL PRIMARY KEY,
+    NOME VARCHAR(150) NOT NULL,
+    VALOR_TOTAL NUMERIC(10, 2) NOT NULL CHECK (VALOR_TOTAL > 0),
+    DATA_DESPESA DATE NOT NULL DEFAULT CURRENT_DATE,
+    TIPO_DESPESA VARCHAR(20) NOT NULL CHECK (TIPO_DESPESA IN ('FIXA', 'ADICIONAL')),
+    TIPO_TRANSACAO VARCHAR(20) NOT NULL CHECK (TIPO_TRANSACAO IN ('CREDITO', 'DEBITO')),
+    PARCELAS_TOTAIS INTEGER,
+    DATA_PRIMEIRA_PARCELA DATE,
+    FK_ID_USUARIO INTEGER NOT NULL REFERENCES USUARIOS(ID_USUARIO) ON DELETE CASCADE,
+    FK_ID_CATEGORIA INTEGER NOT NULL REFERENCES CATEGORIAS(ID_CATEGORIA) ON DELETE RESTRICT,
+    FK_ID_FORMA_PAGAMENTO INTEGER NOT NULL REFERENCES FORMA_PAGAMENTO(ID_FORMA_PAGAMENTO) ON DELETE RESTRICT
+);
 
 # Quando for dinheiro o tipo_transacao já seta para debito, 
 # porem quando for cartão ou pix vai ser preciso informar se foi credito ou debito, 
 # se for credito o usuario precisa informar parcelas_totais na tabela despesas.
 
-categorias (
-	id_categoria
-	nome
-	descricao
-)
+CREATE TABLE CATEGORIAS (
+    ID_CATEGORIA SERIAL PRIMARY KEY,
+    NOME VARCHAR(100) NOT NULL,
+    DESCRICAO TEXT
+);
 
-forma_pagamento (
-	id_forma_pagamento
-	nome (cartão, dinheiro, pix)	
-)
+CREATE TABLE FORMA_PAGAMENTO (
+    ID_FORMA_PAGAMENTO SERIAL PRIMARY KEY,
+    NOME VARCHAR(50) NOT NULL UNIQUE -- 'CARTÃO', 'DINHEIRO', 'PIX'
+);
 
 SELECT SUM(valor_total) 
 FROM despesas 
