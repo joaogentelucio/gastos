@@ -5,8 +5,8 @@ import LoginPage from './pages/LoginPage';
 //import RegisterPage from './pages/RegisterPage';
 
 import DashboardPage from './pages/DashboardPage';
-import StandardExpensesPage from './pages/StandardExpensesPage';
-import Sidebar from './components/Sidebar';
+import StandardExpensesPage from './pages/Despesas';
+import Sidebar from './components/sidebar';
 
 const DashboardLayout = () => (
   <div style={{ display: 'flex' }}>

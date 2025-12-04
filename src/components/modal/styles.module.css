@@ -1,0 +1,85 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); 
+    z-index: 1000;
+}
+.modalContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+    z-index: 1001;
+    width: 90%;
+    max-width: 400px;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modalContainer h3 {
+    margin: 0 0 10px 0;
+    color: #2c3e50; 
+    font-size: 1.5em;
+}
+
+.inputField {
+    padding: 12px;
+    border: 1px solid #dcdfe6; 
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.2s;
+}
+
+.inputField:focus {
+    border-color: #3498db; 
+    outline: none;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.buttonBase {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.saveButton {
+    composes: buttonBase; 
+    background-color: #3498db; 
+    color: white;
+}
+
+.saveButton:hover {
+    background-color: #2980b9;
+}
+
+.cancelButton {
+    composes: buttonBase; 
+    background-color: #ecf0f1;
+    color: #333;
+    border: 1px solid #dcdfe6;
+}
+
+.cancelButton:hover {
+    background-color: #dcdfe6;
+}

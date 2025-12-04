@@ -1,0 +1,96 @@
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.mainContent {
+    flex-grow: 1;
+    padding: 30px 40px;
+}
+
+.pageTitle {
+    font-size: 2.2em; 
+    color: #2c3e50; 
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.kpiContainer {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 40px;
+    flex-wrap: wrap; 
+}
+
+.kpiCard {
+    padding: 25px;
+    flex: 1;
+    border-radius: 12px; 
+    background-color: #242424;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04); 
+    min-width: 280px;
+    transition: transform 0.3s ease;
+}
+
+.kpiCard:hover {
+    transform: translateY(-3px); 
+}
+
+.kpiTitle {
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+    color: #7f8c8d; 
+    font-weight: 500;
+}
+
+.kpiValue {
+    font-size: 2.8em;
+    margin: 5px 0;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.valueExpense {
+    color: #e74c3c; 
+}
+
+.valuePrediction {
+    color: #3498db; 
+}
+
+.valueBalance {
+    color: #2ecc71; 
+}
+
+.kpiInfo {
+    color: #95a5a6; 
+    display: block;
+    margin-top: 5px;
+    font-size: 0.85em;
+}
+
+.reportBlock {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.reportBlock h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 1.5em;
+}
+
+.chartPlaceholder {
+    height: 300px;
+    background-color: #f9fbfd; 
+    border: 1px dashed #dce1e6; 
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b0b8c0;
+    font-style: italic;
+}
