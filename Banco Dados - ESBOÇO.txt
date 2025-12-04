@@ -1,0 +1,44 @@
+usuarios (
+	id_usuario
+	nome
+	email
+	senha
+	foto_perfil
+	data_ultimo_login
+	data_ultima_revisao_geral
+)
+
+despesas (
+	id_despesa
+	nome
+	valor_total
+	data_despesa
+	tipo_despesa /*fixa/adicional*/
+	tipo_transacao (credito/debito) 
+	parcelas_totais
+	data_primeira_parcela
+	fk_id_usuario
+	fk_id_categoria
+	fk_id_forma_pagamento
+)
+
+# Quando for dinheiro o tipo_transacao já seta para debito, 
+# porem quando for cartão ou pix vai ser preciso informar se foi credito ou debito, 
+# se for credito o usuario precisa informar parcelas_totais na tabela despesas.
+
+categorias (
+	id_categoria
+	nome
+	descricao
+)
+
+forma_pagamento (
+	id_forma_pagamento
+	nome (cartão, dinheiro, pix)	
+)
+
+SELECT SUM(valor_total) 
+FROM despesas 
+WHERE fk_id_usuario = [ID_DO_USUÁRIO] 
+  AND EXTRACT(MONTH FROM data_despesa) = 12 
+  AND EXTRACT(YEAR FROM data_despesa) = 2025;
