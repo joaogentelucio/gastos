@@ -15,60 +15,6 @@
     font-weight: 700;
 }
 
-.kpiContainer {
-    display: flex;
-    gap: 25px;
-    margin-bottom: 40px;
-    flex-wrap: wrap; 
-}
-
-.kpiCard {
-    padding: 25px;
-    flex: 1;
-    border-radius: 12px; 
-    background-color: #242424;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04); 
-    min-width: 280px;
-    transition: transform 0.3s ease;
-}
-
-.kpiCard:hover {
-    transform: translateY(-3px); 
-}
-
-.kpiTitle {
-    margin: 0 0 10px 0;
-    font-size: 1.1em;
-    color: #7f8c8d; 
-    font-weight: 500;
-}
-
-.kpiValue {
-    font-size: 2.8em;
-    margin: 5px 0;
-    font-weight: 800;
-    line-height: 1.2;
-}
-
-.valueExpense {
-    color: #e74c3c; 
-}
-
-.valuePrediction {
-    color: #3498db; 
-}
-
-.valueBalance {
-    color: #2ecc71; 
-}
-
-.kpiInfo {
-    color: #95a5a6; 
-    display: block;
-    margin-top: 5px;
-    font-size: 0.85em;
-}
-
 .reportBlock {
     background-color: #ffffff;
     padding: 30px;
