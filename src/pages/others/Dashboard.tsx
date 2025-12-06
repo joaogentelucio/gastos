@@ -1,15 +1,13 @@
-import { Sidebar } from '../components/sidebar';
-import styles from '../styles/Dashboard.module.css'; 
-import { Card } from '../components/card';
+import styles from '@/styles/Dashboard.module.css'; 
+import { Card } from '@/components/card';
 
-export default function DashboardPage() {
+export default function Dashboard() {
   const currentMonthExpenses = 100.00; 
   const standardMonthlyExpenses = 0.00; 
   const futureMonthPrediction = currentMonthExpenses * 0.8 + standardMonthlyExpenses; 
 
   return (
     <div className={styles.container}>
-      <Sidebar />
       <main className={styles.mainContent}>
         <h1 className={styles.pageTitle}>
           Dashboard Financeiro

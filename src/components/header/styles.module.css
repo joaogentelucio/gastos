@@ -1,0 +1,83 @@
+.header {
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: absolute; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+
+.profileWrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.profileMenu {
+  position: absolute;
+  top: 30px;
+  left: 60px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  z-index: 2000;
+}
+
+.profileMenu a,
+.profileMenu button {
+  padding: 8px 10px;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.profileMenu a:hover,
+.profileMenu button:hover {
+  background: #cccccc50;
+  border-radius: 5px;
+}
+
+
+.fotoPerfil {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid;
+  position: relative;
+  left: 20px;
+}
+
+.placeholder {
+  width: 40px;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #555;
+}
+
+.menuToggle {
+  display: none;
+}
+
+.menuIcon {
+  position: relative;
+  right: 20px;
+  cursor: pointer;
+  font-size: 2rem;
+}
