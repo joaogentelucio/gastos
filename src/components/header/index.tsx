@@ -53,7 +53,7 @@ export default function Header() {
     localStorage.clear();
 
     // Redireciona pra página de login (ou onde quiser)
-    navigate('/auth/login');
+    navigate('/app/login');
   };
 
   return (

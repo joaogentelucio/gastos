@@ -91,10 +91,10 @@ export default function Login() {
 
             {/* Links */}
             <div className={styles.forgot}>
-              <Link to="/prestador/register" className={styles.link} style={{ color: theme.colors.inactive }}>Criar conta</Link>
+              <Link to="/app/register" className={styles.link} style={{ color: theme.colors.inactive }}>Criar conta</Link>
             </div>
             <div className={styles.forgot}>
-              <a href="/prestador/recuperarSenha" className={styles.link} style={{ color: theme.colors.inactive }}>Esqueceu a senha?</a>
+              <a href="/app/recuperarSenha" className={styles.link} style={{ color: theme.colors.inactive }}>Esqueceu a senha?</a>
             </div>
           </div>
         </form>

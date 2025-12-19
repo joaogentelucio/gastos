@@ -14,7 +14,9 @@ import Ajustes from "@/pages/others/Ajustes";
 export default function OthersRoutes() { 
     const location = useLocation();
     const noHeaderRoutes = ['/login', '/register'];
-    const showHeader = !noHeaderRoutes.some(route => location.pathname.endsWith(route));
+    const showHeader = !noHeaderRoutes.some(route => 
+        location.pathname.endsWith(route)
+    );
     
     return (
         <>

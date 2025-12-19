@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://meetservices.onrender.com/api/', 
+  baseURL: 'http://192.168.1.2:5151/api/', 
   timeout: 5000,
   withCredentials: true, 
   headers: {
@@ -60,7 +60,7 @@ api.interceptors.response.use(
           })
           .catch(err => {
             processQueue(err, null);
-            window.location.href = '/login'; 
+            window.location.href = '/app/login'; 
             reject(err);
           })
           .finally(() => {

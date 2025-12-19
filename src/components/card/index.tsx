@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 
 interface CardProps {
     title: string;
-    value: number;
+    value: string | number;
     valueColor: string;
     info: string;
 }
@@ -15,7 +15,7 @@ export function Card({title, value, valueColor, info}: CardProps) {
                     {title}
                 </h3>
                 <p className={styles.value} style={{color: valueColor}}>
-                    R$ {value.toFixed(2)}
+                    R$ {value}
                 </p>
                 <span className={styles.info}>
                     {info}
