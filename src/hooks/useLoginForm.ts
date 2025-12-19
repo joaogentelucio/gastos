@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@/context/UserContext";
-import { Login } from "@/services/authService";
+import { Login } from "@/services/auth-service";
 
 export function useLoginForm() {
   const navigate = useNavigate();
@@ -20,7 +20,8 @@ export function useLoginForm() {
   const validatePassword = (password: string) =>
     password.length >= 8;
 
-  const isFormValid = () => validateEmail(email) && validatePassword(senha);
+  const isFormValid = () =>
+  validateEmail(email) && validatePassword(senha);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -44,12 +45,11 @@ export function useLoginForm() {
 
     setLoading(true);
     try {
-      const response = await Login(email, senha);
-      const { accessToken, usuario, qrCode } = response;
+      const {usuario} = await Login(email, senha);
 
-      setUsuario({...usuario, accessToken, qrCode});
+      setUsuario(usuario);
 
-      console.log('Login bem-sucedido. Usuário:', usuario, qrCode);
+      console.log('Login bem-sucedido. Usuário:', usuario);
 
       navigate('/app/dashboard');
     } catch (err) {

@@ -1,8 +1,5 @@
 import styles from './styles.module.css';
-
-
-type TipoDespesa = 'fixa' | 'adicional';
-type TipoTransacao = 'credito' | 'debito';
+import { Despesa } from "@/types/despesas-types";
 
 interface ModalProps {
   isOpen: boolean;
@@ -14,10 +11,10 @@ interface ModalProps {
   expenseValue: string;
   setExpenseValue: (value: string) => void;
 
-  tipoDespesa: TipoDespesa | ''; 
-  setTipoDespesa: (type: TipoDespesa) => void;
-  tipoTransacao: TipoTransacao | ''; 
-  setTipoTransacao: (type: TipoTransacao) => void;
+  tipoDespesa: Despesa["tipoDespesa"] | ''; 
+  setTipoDespesa: (type: Despesa["tipoDespesa"]) => void;
+  tipoTransacao: Despesa["tipoTransacao"] | ''; 
+  setTipoTransacao: (type: Despesa["tipoTransacao"]) => void;
   
   parcelasTotais: string; 
   setParcelasTotais: (parcels: string) => void;
@@ -25,7 +22,7 @@ interface ModalProps {
   dataPrimeiraParcela: string; 
   setDataPrimeiraParcela: (date: string) => void; 
 
-  onSave: () => void;
+  onSave: (despesa: Omit<Despesa, "id" | "criadoEm" | "atualizadoEm">) => void;
 }
 
 export default function Modal(
@@ -49,11 +46,27 @@ export default function Modal(
   }: ModalProps) 
 {
     
-  if (!isOpen) {
-    return null;
-  }
+  if (!isOpen) return null;
 
   const showParcelasField = tipoTransacao === 'credito';
+
+  const handleSave = () => {
+    const valorTotal = parseFloat(expenseValue);
+    const parcelas = tipoTransacao === "credito" ? parseInt(parcelasTotais) : 1;
+
+    const novaDespesa: Omit<Despesa, "id" | "criadoEm" | "atualizadoEm"> = {
+      nome: expenseName,
+      valorTotal,
+      tipoDespesa: tipoDespesa as Despesa["tipoDespesa"],
+      tipoTransacao: tipoTransacao as Despesa["tipoTransacao"],
+      parcelasTotais: parcelas,
+      dataPrimeiraParcela: dataPrimeiraParcela || new Date().toISOString().split("T")[0],
+      dataDespesa: new Date().toISOString().split("T")[0],
+      fkIdUsuario: 1, 
+    };
+
+    onSave(novaDespesa);
+  };
 
   return (
     <>
@@ -81,7 +94,7 @@ export default function Modal(
           Tipo de Despesa:
           <select
             value={tipoDespesa}
-            onChange={(e) => setTipoDespesa(e.target.value as TipoDespesa)}
+            onChange={(e) => setTipoDespesa(e.target.value as Despesa["tipoDespesa"])}
             className={styles.inputField}
           >
             <option value="" disabled>Selecione o Tipo</option>
@@ -94,7 +107,7 @@ export default function Modal(
           <select
             value={tipoTransacao}
             onChange={(e) => {
-              const newType = e.target.value as TipoTransacao;
+            const newType = e.target.value as Despesa["tipoTransacao"];
               setTipoTransacao(newType);
               
               if (newType !== 'credito') {
@@ -132,18 +145,8 @@ export default function Modal(
         
 
         <div className={styles.buttonGroup}>
-          <button 
-            onClick={onClose} 
-            className={styles.cancelButton} 
-          >
-            Cancelar
-          </button>
-          <button 
-            onClick={onSave} 
-            className={styles.saveButton} 
-          >
-            Salvar Despesa
-          </button>
+          <button onClick={onClose} className={styles.cancelButton}>Cancelar</button>
+          <button onClick={handleSave} className={styles.saveButton}>Salvar Despesa</button>
         </div>
       </div>
     </>

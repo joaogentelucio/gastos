@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAccessToken } from "./auth-token";
 
 const api = axios.create({
   baseURL: 'http://192.168.1.2:5151/api/', 
@@ -9,69 +10,13 @@ const api = axios.create({
   }
 });
 
-let isRefreshing = false;
-
-type FailedRequest = {
-  resolve: (value?: unknown) => void;
-  reject: (reason?: any) => void;
-};
-
-let failedQueue: FailedRequest[] = [];
-
-const processQueue = (error: unknown, token: string | null = null) => {
-  failedQueue.forEach(prom => {
-    if (error) {
-      prom.reject(error);
-    } else {
-      prom.resolve(token);
-    }
-  });
-
-  failedQueue = [];
-};
-
-api.interceptors.response.use(
-  (response) => response, 
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response.status === 401 && originalRequest.url !== '/auth/refresh') {
-      if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
-        }).then(token => {
-          originalRequest.headers.Authorization = `Bearer ${token}`;
-          return api(originalRequest);
-        }).catch(err => {
-          return Promise.reject(err);
-        });
-      }
-
-      isRefreshing = true;
-
-      return new Promise((resolve, reject) => {
-        api.post('/auth/refresh')
-          .then(res => {
-            const { accessToken } = res.data;
-            api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-
-            processQueue(null, accessToken);
-            resolve(api(originalRequest));
-          })
-          .catch(err => {
-            processQueue(err, null);
-            window.location.href = '/app/login'; 
-            reject(err);
-          })
-          .finally(() => {
-            isRefreshing = false;
-          });
-      });
-    }
-
-    return Promise.reject(error);
+api.interceptors.request.use(config => {
+  const token = getAccessToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
+  return config;
+});
 
-);
 
 export default api;

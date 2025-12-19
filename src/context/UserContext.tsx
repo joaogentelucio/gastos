@@ -1,21 +1,18 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { getAccessToken, setAccessToken } from "@/services/auth-token";
+import { Logout as authLogout } from "@/services/session-service";
 
 type Usuario = {
   Id: number;
   Nome: string;
   Email: string;
   FotoPerfil: string;
-  Papel: string;
-  Slug: string;
-  UrlPublica: string;
-  accessToken: string;
-  QrCode: string;
 };
 
 type UserContextType = {
   usuario: Usuario | null;
   setUsuario: (usuario: Usuario | null) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -32,6 +29,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [usuario, setUsuarioState] = useState<Usuario | null>(null);
 
   useEffect(() => {
+    const token = getAccessToken();
+    if (token) {
+      setAccessToken(token);
+    }
+
     const usuarioStr = localStorage.getItem("usuario");
     if (usuarioStr) {
       setUsuarioState(JSON.parse(usuarioStr));
@@ -45,6 +47,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         Nome: capitalizeName(novoUsuario.Nome),
         Email: novoUsuario.Email.toLowerCase(),
       };
+      
       setUsuarioState(usuarioFormatado);
       localStorage.setItem("usuario", JSON.stringify(usuarioFormatado));
     } else {
@@ -53,11 +56,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("usuario");
-    setUsuarioState(null);
+  const logout = async () => {
+    setUsuarioState(null); 
+    await authLogout();    
   };
-
+  
   return (
     <UserContext.Provider value={{ usuario, setUsuario, logout }}>
       {children}
