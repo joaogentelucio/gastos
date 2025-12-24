@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './sidebar.module.css'; 
 import { FaHome, FaUserCircle } from 'react-icons/fa';
+import styles from './sidebar.module.css'; 
+import { useTheme } from '@/context/ThemeContext';
 
 interface SidebarProps {
   isMenuOpen: boolean;
@@ -9,6 +10,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({isMenuOpen, closeMenu}: SidebarProps) {
+  const { theme } = useTheme();
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -35,16 +37,17 @@ export function Sidebar({isMenuOpen, closeMenu}: SidebarProps) {
   }, [isMenuOpen, closeMenu]);
 
   return (
-    <nav ref={navRef} className={`${styles.nav} ${isMenuOpen ? styles.open : ''}`}>
-      <h3>Menu</h3>
+    <nav ref={navRef} className={`${styles.nav} ${isMenuOpen ? styles.open : ''}`} style={{ backgroundColor: theme.colors.background}}>
+      <h3 style={{ color: theme.colors.text}}>Menu</h3>
       <button
         className={styles.closeMenuIcon} 
+        style={{ color: theme.colors.text}}
         onClick={closeMenu}
         aria-label="Fechar menu"
       >
         &times; 
       </button>
-      <ul className={styles.navList}>
+      <ul className={styles.navList} style={{ color: theme.colors.text}}>
         <li className={styles.navItem}>
           <Link to="/app/dashboard" onClick={closeMenu} className={styles.navLink}>
            <FaHome className={styles.navIcon} />
@@ -58,11 +61,6 @@ export function Sidebar({isMenuOpen, closeMenu}: SidebarProps) {
           </Link>
         </li>
       </ul>
-      <div className={styles.btn}>
-        <button onClick={() => console.log('Logout')}>
-          Sair
-        </button>
-      </div>
     </nav>
   );
 };

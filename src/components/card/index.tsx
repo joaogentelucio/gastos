@@ -1,4 +1,5 @@
 import styles from './styles.module.css';
+import { useTheme } from '@/context/ThemeContext';
 
 interface CardProps {
     title: string;
@@ -8,9 +9,11 @@ interface CardProps {
 }
 
 export function Card({title, value, valueColor, info}: CardProps) {
+    const { theme } = useTheme();
+
     return (
         <div className={styles.container}>
-            <div className={styles.card}>
+            <div className={styles.card} style={{ backgroundColor: theme.colors.bottom }}>
                 <h3 className={styles.title}>
                     {title}
                 </h3>

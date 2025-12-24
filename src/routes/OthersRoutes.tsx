@@ -1,33 +1,42 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import ProtectedRoute from '@/routes/ProtectedRoute';
+import AppLayout from "@/layouts/app-layout";
 
 import Login from '@/pages/auth/sign-in'
 import Register from '@/pages/auth/sign-up'
 
-import Header from '@/components/header'
 import Dashboard from "@/pages/others/Dashboard";
 import Despesas from "@/pages/others/Despesas";
-import Perfil from "@/pages/others/Perfil";
 import Ajustes from "@/pages/others/Ajustes";
 
+import Perfil from "@/pages/others/sub-pages/Perfil";
+import Temas from "@/pages/others/sub-pages/Temas";
+import Notificacoes from "@/pages/others/sub-pages/Notificacoes";
+
+import { useUser } from '@/context/UserContext';
+
 export default function OthersRoutes() { 
-    const location = useLocation();
-    const noHeaderRoutes = ['/login', '/register'];
-    const showHeader = !noHeaderRoutes.some(route => 
-        location.pathname.endsWith(route)
-    );
+    const { usuario } = useUser();
     
     return (
         <>
-            {showHeader && <Header />}
             <Routes>
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
+                <Route element={<AppLayout />}>
                 <Route path="dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                 <Route path="despesas" element={<ProtectedRoute><Despesas /></ProtectedRoute>} />
-                <Route path="perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
-                <Route path="ajustes" element={<ProtectedRoute><Ajustes /></ProtectedRoute>} />
+                <Route path="ajustes" element={<ProtectedRoute><Ajustes /></ProtectedRoute>} >
+                <Route index element={<Perfil />} />
+                    <Route path="perfil" element={<Perfil />} />
+                    <Route path="temas" element={<Temas />} />
+                    <Route path="notificacoes" element={<Notificacoes />} />
+                </Route>
+                </Route>
+                
+                <Route path="login" element={usuario ? <Navigate to="dashboard"/> : <Login />} />
+                <Route path="register" element={usuario ? <Navigate to="dashboard"/> : <Register />} />
+            
+                <Route path="*" element={<Navigate to={usuario ? "/app/dashboard" : "/app/login"} replace />} />
             </Routes>
         </>
     )

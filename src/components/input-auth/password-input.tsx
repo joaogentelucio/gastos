@@ -1,6 +1,6 @@
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import styles from './styles.module.css';
-import { useTheme } from '@/context/ThemeConctext';
+import { useTheme } from '@/context/ThemeContext';
 
 interface PasswordInputProps {
   value: string;

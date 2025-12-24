@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash, FaEnvelope, FaPlus, FaUser } from 'react-icons/fa';
 import styles from './styles.module.css';
-import { useTheme } from '@/context/ThemeConctext';
+import { useTheme } from '@/context/ThemeContext';
 import { useRegisterForm } from '@/hooks/useRegisterForm';
 
 export default function Register() {

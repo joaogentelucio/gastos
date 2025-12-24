@@ -1,0 +1,41 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.content {
+  width: 100%;
+  padding: 0;
+  transition: all 0.3s ease;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.open {
+  width: calc(100% - 240px);
+  margin-left: 240px; 
+}
+
+.closed {
+  width: 100%;
+  margin-left: 0; 
+}
+
+.fullContent {
+  width: 100% !important;
+  margin-left: 0 !important;
+  padding: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .open {
+    width: calc(100% - 240px);
+    margin-left: 240px;
+    filter: brightness(0.8);
+    pointer-events: none;
+    user-select: none;
+  }
+}

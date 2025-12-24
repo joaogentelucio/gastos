@@ -2,7 +2,8 @@ const dark = {
   dark: true,
   colors: {
     background: '#212121',
-    background2: '#181818',
+    background2: '#222222',
+    background3: '#181818',
     primary: '#4169E1',
     secondary: '#6495ED',
     bottom: '#303030',

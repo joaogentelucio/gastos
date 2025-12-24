@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useTheme } from '@/context/ThemeConctext';
+import { useTheme } from '@/context/ThemeContext';
 import styles from './styles.module.css';
 import { EmailInput } from '@/components/input-auth/email-input';
 import { PasswordInput } from '@/components/input-auth/password-input';
 import { useLoginForm } from '@/hooks/useLoginForm';
 import imgLogin from '@/assets/iconLogin.png';
+import { Loading } from "@/components/loading";
 
 export default function Login() {
   const { theme } = useTheme();
@@ -41,6 +42,7 @@ export default function Login() {
   
   return (
     <div className={styles.container} style={{ backgroundColor: theme.colors.background }}>
+      {loading && <Loading />}
       <div className={styles.wrapper}>
         <div className={styles.headerWrapper}>
           <img 

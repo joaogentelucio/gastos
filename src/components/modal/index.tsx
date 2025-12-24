@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import { Despesa } from "@/types/despesas-types";
+import { CriarDespesaDTO } from "@/types/despesas-types";
 
 interface ModalProps {
   isOpen: boolean;
@@ -11,10 +11,10 @@ interface ModalProps {
   expenseValue: string;
   setExpenseValue: (value: string) => void;
 
-  tipoDespesa: Despesa["tipoDespesa"] | ''; 
-  setTipoDespesa: (type: Despesa["tipoDespesa"]) => void;
-  tipoTransacao: Despesa["tipoTransacao"] | ''; 
-  setTipoTransacao: (type: Despesa["tipoTransacao"]) => void;
+  tipoDespesa: CriarDespesaDTO["TipoDespesa"] | ''; 
+  setTipoDespesa: (type: CriarDespesaDTO["TipoDespesa"]) => void;
+  tipoTransacao: CriarDespesaDTO["TipoTransacao"] | ''; 
+  setTipoTransacao: (type: CriarDespesaDTO["TipoTransacao"]) => void;
   
   parcelasTotais: string; 
   setParcelasTotais: (parcels: string) => void;
@@ -22,7 +22,7 @@ interface ModalProps {
   dataPrimeiraParcela: string; 
   setDataPrimeiraParcela: (date: string) => void; 
 
-  onSave: (despesa: Omit<Despesa, "id" | "criadoEm" | "atualizadoEm">) => void;
+  onSave: (despesa: CriarDespesaDTO) => void;
 }
 
 export default function Modal(
@@ -48,21 +48,23 @@ export default function Modal(
     
   if (!isOpen) return null;
 
-  const showParcelasField = tipoTransacao === 'credito';
+  const showParcelasField = tipoTransacao === 'CREDITO';
 
   const handleSave = () => {
-    const valorTotal = parseFloat(expenseValue);
-    const parcelas = tipoTransacao === "credito" ? parseInt(parcelasTotais) : 1;
+    if (!tipoDespesa || !tipoTransacao) return;
 
-    const novaDespesa: Omit<Despesa, "id" | "criadoEm" | "atualizadoEm"> = {
-      nome: expenseName,
-      valorTotal,
-      tipoDespesa: tipoDespesa as Despesa["tipoDespesa"],
-      tipoTransacao: tipoTransacao as Despesa["tipoTransacao"],
-      parcelasTotais: parcelas,
-      dataPrimeiraParcela: dataPrimeiraParcela || new Date().toISOString().split("T")[0],
-      dataDespesa: new Date().toISOString().split("T")[0],
-      fkIdUsuario: 1, 
+    const hoje = new Date().toISOString();
+
+    const novaDespesa: CriarDespesaDTO = {
+      Nome: expenseName,
+      ValorTotal: parseFloat(expenseValue),
+      TipoDespesa: tipoDespesa,
+      TipoTransacao: tipoTransacao,
+      ParcelasTotais: tipoTransacao === 'CREDITO' ? Number(parcelasTotais) : undefined,
+      DataDespesa: hoje,
+      DataPrimeiraParcela: tipoTransacao === 'CREDITO' ? dataPrimeiraParcela || hoje : undefined,
+      CategoriaId: 1,        
+      FormaPagamentoId: 1 
     };
 
     onSave(novaDespesa);
@@ -94,12 +96,12 @@ export default function Modal(
           Tipo de Despesa:
           <select
             value={tipoDespesa}
-            onChange={(e) => setTipoDespesa(e.target.value as Despesa["tipoDespesa"])}
+            onChange={(e) => setTipoDespesa(e.target.value as CriarDespesaDTO["TipoDespesa"])}
             className={styles.inputField}
           >
             <option value="" disabled>Selecione o Tipo</option>
-            <option value="fixa">Fixa</option>
-            <option value="adicional">Adicional</option>
+            <option value="FIXA">Fixa</option>
+            <option value="ADICIONAL">Adicional</option>
           </select>
         </label>
         <label className={styles.labelField}>
@@ -107,18 +109,18 @@ export default function Modal(
           <select
             value={tipoTransacao}
             onChange={(e) => {
-            const newType = e.target.value as Despesa["tipoTransacao"];
+            const newType = e.target.value as CriarDespesaDTO["TipoTransacao"];
               setTipoTransacao(newType);
               
-              if (newType !== 'credito') {
+              if (newType !== 'CREDITO') {
                 setParcelasTotais('');
               }
             }}
             className={styles.inputField}
           >
             <option value="" disabled>Selecione a Transação</option>
-            <option value="debito">Débito</option>
-            <option value="credito">Crédito</option>
+            <option value="DEBITO">Débito</option>
+            <option value="CREDITO">Crédito</option>
           </select>
         </label>
         {showParcelasField && (

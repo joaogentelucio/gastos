@@ -1,6 +1,6 @@
 import { FaEnvelope } from 'react-icons/fa';
 import styles from './styles.module.css';
-import { useTheme } from '@/context/ThemeConctext';
+import { useTheme } from '@/context/ThemeContext';
 
 interface EmailInputProps {
   value: string;

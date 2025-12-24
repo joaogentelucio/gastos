@@ -12,6 +12,16 @@
   z-index: 1000;
 }
 
+.headerFull {
+  left: 0;
+  width: 100%;
+}
+
+.headerWithSidebar {
+  left: 240px; 
+  width: calc(100% - 240px);
+}
+
 .profileWrapper {
   position: relative;
   cursor: pointer;
@@ -19,8 +29,8 @@
 
 .profileMenu {
   position: absolute;
-  top: 30px;
-  left: 60px;
+  top: 12px;
+  right: 42px;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
   padding: 10px;
@@ -56,7 +66,7 @@
   object-fit: cover;
   border: 2px solid;
   position: relative;
-  left: 20px;
+  right: 20px;
 }
 
 .placeholder {
@@ -71,13 +81,11 @@
   color: #555;
 }
 
-.menuToggle {
-  display: none;
-}
-
 .menuIcon {
-  position: relative;
-  right: 20px;
+  background-color: transparent;
+  border: none;
+  left: 20px;
   cursor: pointer;
   font-size: 2rem;
+  position: relative;
 }

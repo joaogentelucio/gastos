@@ -1,5 +1,15 @@
 import axios from 'axios';
-import { getAccessToken } from "./auth-token";
+import { getAccessToken, setAccessToken } from "./auth-token";
+
+let isRefreshing = false;
+let failedQueue: any[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach(p => {
+    error ? p.reject(error) : p.resolve(token);
+  });
+  failedQueue = [];
+};
 
 const api = axios.create({
   baseURL: 'http://192.168.1.2:5151/api/', 
@@ -18,5 +28,65 @@ api.interceptors.request.use(config => {
   return config;
 });
 
+api.interceptors.response.use(
+  response => response,
+  async error => {
+    const originalRequest = error.config;
+
+    if (error.response?.status !== 401) {
+      return Promise.reject(error);
+    }
+
+    if (originalRequest.url?.includes("Auth/auto-login")) {
+      return Promise.reject(error);
+    }
+    
+    if (originalRequest.url?.includes("Auth/refresh")) {
+      localStorage.clear();
+      window.location.href = "/app/login";
+      return Promise.reject(error);
+    }
+
+    if (originalRequest._retry) {
+      localStorage.clear();
+      window.location.href = "/app/login";
+      return Promise.reject(error);
+    }
+
+    if (isRefreshing) {
+      return new Promise((resolve, reject) => {
+        failedQueue.push({
+          resolve: (token: string) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            resolve(api(originalRequest));
+          },
+          reject
+        });
+      });
+    }
+
+    originalRequest._retry = true;
+    isRefreshing= true;
+
+    try {
+      const { data } = await api.post("Auth/refresh");
+      const newAccessToken = data.accessToken;
+
+      setAccessToken(newAccessToken);
+      processQueue(null, newAccessToken);
+
+      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+      return api(originalRequest);
+    } catch (error) {
+      processQueue(error, null);
+      localStorage.clear();
+      window.location.href = "/app/login";
+      return Promise.reject(error);
+    } finally
+    {
+      isRefreshing = false;
+    }
+  }
+);
 
 export default api;

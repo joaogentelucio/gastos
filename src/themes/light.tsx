@@ -2,7 +2,8 @@ const light = {
   dark: false,
   colors: {
     background: '#ffffff',
-    background2: '#f9f9f9',
+    background2: '#f2f2f2',
+    background3: '#f9f9f9',
     primary: '#4169E1',
     secondary: '#6495ED',
     bottom: '#e0e0e0',

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getAccessToken, setAccessToken } from "@/services/auth-token";
-import { Logout as authLogout } from "@/services/session-service";
+import { Logout as authLogout } from "@/services/logout-service";
 
 type Usuario = {
   Id: number;
@@ -13,6 +13,7 @@ type UserContextType = {
   usuario: Usuario | null;
   setUsuario: (usuario: Usuario | null) => void;
   logout: () => Promise<void>;
+  loading: boolean;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -27,6 +28,7 @@ const capitalizeName = (nome: string) => {
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [usuario, setUsuarioState] = useState<Usuario | null>(null);
+  const [loading, setLoading ] = useState(true);
 
   useEffect(() => {
     const token = getAccessToken();
@@ -54,6 +56,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.removeItem("usuario");
       setUsuarioState(null);
     }
+    setLoading(false);
   };
 
   const logout = async () => {
@@ -62,7 +65,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
   
   return (
-    <UserContext.Provider value={{ usuario, setUsuario, logout }}>
+    <UserContext.Provider value={{ usuario, setUsuario, logout, loading }}>
       {children}
     </UserContext.Provider>
   );

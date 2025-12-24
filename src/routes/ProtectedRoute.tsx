@@ -1,15 +1,22 @@
 import { Navigate } from "react-router-dom";
+import { useUser } from "@/context/UserContext";
 
 interface Props {
   children: React.ReactNode;
 }
 
 export default function ProtectedRoute({ children }: Props) {
-  const token = localStorage.getItem("accessToken");
+  const { usuario, loading } = useUser();
 
-  if (!token) {
+  if (loading) {
+    return <div>Carregando...</div>; // Ou um Spinner
+  }
+
+  // 2. Se terminou de carregar e não tem usuário, aí sim manda para o login
+  if (!usuario) {
     return <Navigate to="/app/login" replace />;
   }
 
-  return children;
+  // 3. Se tem usuário, libera o acesso
+  return <>{children}</>;
 }

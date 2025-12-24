@@ -2,16 +2,19 @@ import { useEffect, useState } from 'react';
 import styles from '@/styles/despesas.module.css'
 import Modal from '@/components/modal'; 
 import api from '@/services/api'
-import { Despesa } from "@/types/despesas-types";
+import { Despesa, CriarDespesaDTO } from "@/types/despesas-types";
+import DespesaList from '@/components/despesa-lista';
+import { Loading } from '@/components/loading';
 
 export default function Despesas() {
+  const [isLoading, setIsLoading] = useState(false);
   const [despesas, setDespesas] = useState<Despesa[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [expenseName, setExpenseName] = useState('');
   const [expenseValue, setExpenseValue] = useState('');
-  const [tipoDespesa, setTipoDespesa] = useState<Despesa["tipoDespesa"] | ''>('');
-  const [tipoTransacao, setTipoTransacao] = useState<Despesa["tipoTransacao"] | ''>('');
+  const [tipoDespesa, setTipoDespesa] = useState<Despesa["TipoDespesa"] | ''>('');
+  const [tipoTransacao, setTipoTransacao] = useState<Despesa["TipoTransacao"] | ''>('');
   const [parcelasTotais, setParcelasTotais] = useState('');
   const [dataPrimeiraParcela, setDataPrimeiraParcela] = useState('');
 
@@ -24,23 +27,29 @@ export default function Despesas() {
       const { data } = await api.get<Despesa[]>("/Despesas/ListarDespesas");
       setDespesas(data);
     } catch (err) {
+      setDespesas([]);
       console.error("Erro ao carregar despesas:", err);
     }
   };
 
   const handleCreateDespesa = async (
-    novaDespesa: Omit<Despesa, "id" | "criadoEm" | "atualizadoEm">) => {
+    novaDespesa: CriarDespesaDTO) => {
     try {
-      await api.post("/Despesas/InserirDespesa", novaDespesa);
-      carregarDespesas();  
+      setIsLoading(true);
+      const {data} = await api.post<Despesa>("/Despesas/InserirDespesa", novaDespesa);
+      setDespesas(prev => [data, ...prev]);
       setIsModalOpen(false);
     } catch (err) {
       console.error("Erro ao criar despesa:", err);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className={styles.container}>
+      {isLoading && <Loading />}
       <button 
         className={styles.btn}
         onClick={() => setIsModalOpen(true)} 
@@ -66,23 +75,7 @@ export default function Despesas() {
         setDataPrimeiraParcela={setDataPrimeiraParcela}
         onSave={handleCreateDespesa}
       />
-      <div className={styles.cardsContainer}>
-        {despesas.length === 0 ? (
-          <p>Nenhuma despesa encontrada.</p>
-        ) : (
-          despesas.map(d => (
-            <div key={d.id} className={styles.card}>
-              <h4>{d.nome}</h4>
-              <p>Valor: R$ {d.valorTotal.toFixed(2)}</p>
-              <p>Tipo: {d.tipoDespesa} / {d.tipoTransacao}</p>
-              {d.tipoTransacao === "credito" && (
-                <p>Parcelas: {d.parcelasTotais} - 1ª Parcela: {d.dataPrimeiraParcela}</p>
-              )}
-              <p>Data da despesa: {d.dataDespesa}</p>
-            </div>
-          ))
-        )}
-      </div>
+      <DespesaList despesas={despesas}/>
     </div>
   );
 };
