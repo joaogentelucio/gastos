@@ -1,85 +1,136 @@
+/* Container do Overlay (Fundo escuro) */
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6); 
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px); /* Efeito de desfoque moderno */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Container do Modal */
 .modalContainer {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); 
-    
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px; 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
-    z-index: 1001;
-    width: 90%;
-    max-width: 400px;
-    
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  
+  width: 90%;
+  max-width: 500px;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .modalContainer h3 {
-    margin: 0 0 10px 0;
-    color: #2c3e50; 
-    font-size: 1.5em;
+  margin: 0;
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
 }
 
+/* Agrupamento dos Campos */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.labelField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+/* Inputs e Selects */
 .inputField {
-    padding: 12px;
-    border: 1px solid #dcdfe6; 
-    border-radius: 6px;
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 1em;
-    transition: border-color 0.2s;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #2d3748;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #f8fafc;
 }
 
 .inputField:focus {
-    border-color: #3498db; 
-    outline: none;
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+  background-color: #ffffff;
 }
 
+/* Área específica para Crédito (Animação de entrada) */
+.creditOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #edf2f7;
+  border-radius: 8px;
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Botões */
 .buttonGroup {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.buttonBase {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s, opacity 0.2s;
-}
-
-.saveButton {
-    composes: buttonBase; 
-    background-color: #3498db; 
-    color: white;
-}
-
-.saveButton:hover {
-    background-color: #2980b9;
+.cancelButton, .saveButton {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.1s;
+  border: none;
 }
 
 .cancelButton {
-    composes: buttonBase; 
-    background-color: #ecf0f1;
-    color: #333;
-    border: 1px solid #dcdfe6;
+  background-color: #e2e8f0;
+  color: #4a5568;
 }
 
-.cancelButton:hover {
-    background-color: #dcdfe6;
+.saveButton {
+  background-color: #3182ce;
+  color: white;
+}
+
+.cancelButton:hover, .saveButton:hover {
+  filter: brightness(0.9);
+}
+
+.cancelButton:active, .saveButton:active {
+  transform: scale(0.98);
+}
+
+/* Animação suave para quando o campo de crédito aparece */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

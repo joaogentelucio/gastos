@@ -50,12 +50,16 @@ export default function Despesas() {
   return (
     <div className={styles.container}>
       {isLoading && <Loading />}
-      <button 
-        className={styles.btn}
-        onClick={() => setIsModalOpen(true)} 
-      >
-        Nova Despesa
-      </button>
+      <div className={styles.topSection}>
+        <h2 className={styles.title}>Minhas Despesas</h2>
+        <button className={styles.btn} onClick={() => setIsModalOpen(true)}>
+          Nova Despesa
+        </button>
+      </div>
+      
+      <div className={styles.contentSection}>
+        <DespesaList despesas={despesas}/>
+      </div>
       
       <Modal
         isOpen={isModalOpen}
@@ -75,7 +79,6 @@ export default function Despesas() {
         setDataPrimeiraParcela={setDataPrimeiraParcela}
         onSave={handleCreateDespesa}
       />
-      <DespesaList despesas={despesas}/>
     </div>
   );
 };
