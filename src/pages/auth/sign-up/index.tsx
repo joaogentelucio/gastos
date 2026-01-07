@@ -11,20 +11,14 @@ export default function Register() {
     nome,
     email,
     senha,
-    papel,
-    nomeFantasia,
-    cnpj,
-    showPassword,
     error,
     emailError,
     loading,
+    showPassword,
     setFotoPerfil,
     setNome,
     setEmail,
     setSenha,
-    setPapel,
-    setNomeFantasia,
-    setCnpj,
     setShowPassword,
     isFormValid,
     handleSubmit
@@ -120,54 +114,6 @@ export default function Register() {
               </span>
             </div>
           </div>
-
-          <div className={styles.formGroup}>
-            <label className={styles.label} style={{ color: theme.colors.text }}>Tipo de Usuário</label>
-            <div className={styles.labelWrapper}>
-              <select
-                className={styles.input}
-                style={{ backgroundColor: theme.colors.bottom, color: theme.colors.inactive }}
-                value={papel}
-                onChange={(e) => setPapel(e.target.value)}
-                required
-              >
-                <option value="">Selecione...</option>
-                <option value="autonomo">Autônomo</option>
-                <option value="empresa">Empresa</option>
-                <option value="cliente">Profissional</option>
-              </select>
-            </div>
-          </div>
-
-          {papel === 'empresa' && (
-            <>
-              <div className={styles.formGroup}>
-                <label className={styles.label} style={{ color: theme.colors.text }}>Nome Fantasia</label>
-                <input
-                  type="text"
-                  className={styles.input}
-                  style={{ backgroundColor: theme.colors.bottom, color: theme.colors.inactive }}
-                  value={nomeFantasia}
-                  onChange={(e) => setNomeFantasia(e.target.value)}
-                  placeholder="Digite o nome fantasia"
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label className={styles.label} style={{ color: theme.colors.text }}>CNPJ</label>
-                <input
-                  type="text"
-                  className={styles.input}
-                  style={{ backgroundColor: theme.colors.bottom, color: theme.colors.inactive }}
-                  value={cnpj}
-                  onChange={(e) => setCnpj(e.target.value)}
-                  placeholder="Digite o CNPJ"
-                  required
-                />
-              </div>
-            </>
-          )}
 
           {error && <p className={styles.error}>{error}</p>}
 

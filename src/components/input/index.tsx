@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import styles from './style.module.css';
-import { useTheme } from '../../contexts/ThemeContext';
+import { useTheme } from '@/context/ThemeContext';
 
 interface InputGenericProps {
   value: string;
