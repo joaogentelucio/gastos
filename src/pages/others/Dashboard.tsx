@@ -3,6 +3,7 @@ import styles from '@/styles/Dashboard.module.css';
 import { useTheme } from '@/context/ThemeContext';
 import api from "@/services/api";
 import { Card } from '@/components/card';
+import { GraficoCategorias } from '@/components/graficoCategorias';
 
 export default function Dashboard() {
   const { theme } = useTheme();
@@ -65,6 +66,8 @@ export default function Dashboard() {
           />
         </div>
 
+        <GraficoCategorias />
+        
         <div className={styles.reportBlock} style={{ backgroundColor: theme.colors.bottom }}>
           <h3 style={{ color: theme.colors.primary }}>Gráfico de Despesas Recorrentes</h3>
           <div className={styles.chartPlaceholder} style={{ backgroundColor: theme.colors.background2 }}>
