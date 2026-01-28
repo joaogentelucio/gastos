@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, Sector } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import api from "@/services/api";
 import styles from './styles.module.css';
 
@@ -8,13 +8,15 @@ interface GastoCategoria {
   value: number;
 }
 
-const COLORS = ['#6366f1', '#f43f5e', '#10b981', '#fbbf24', '#8b5cf6'];
+const COLORS = ['#4ade80', '#f87171', '#6366f1', '#fbbf24', '#a855f7'];
 
 export function GraficoCategorias() {
   const [dados, setDados] = useState<GastoCategoria[]>([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
-  const [activeIndex, setActiveIndex] = useState(-1);
+  
+  // Estado para rastrear qual fatia está selecionada
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const buscarDados = async () => {
@@ -31,68 +33,60 @@ export function GraficoCategorias() {
     buscarDados();
   }, []);
 
-  if (loading) return <div className={styles.loading}>Carregando dados financeiros...</div>;
+  if (loading) return <div className={styles.loading}>Carregando...</div>;
   if (erro) return <div className={styles.error}>{erro}</div>;
+
+  // Pega os dados da fatia ativa ou mostra o "Total" por padrão
+  const itemAtivo = activeIndex !== null ? dados[activeIndex] : { name: "Total", value: 100 };
 
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>Gastos por Categoria</h3>
       
-      <ResponsiveContainer width="100%" height="85%">
+      <ResponsiveContainer width="100%" height="100%">
         <PieChart>
-          <Tooltip 
-            contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }}
-            itemStyle={{ color: '#f8fafc' }}
-            formatter={(value: any) => [`${value}%`, 'Peso']}
-          />
-          
+          {/* O texto agora é dinâmico com base no mouse/clique */}
+          <text x="50%" y="45%" textAnchor="middle" dominantBaseline="middle" className={styles.centerTextTitle}>
+            {itemAtivo.name}
+          </text>
+          <text x="50%" y="55%" textAnchor="middle" dominantBaseline="middle" className={styles.centerTextValue}>
+            {itemAtivo.value}%
+          </text>
+
           <Pie
-            {...({
-              data: dados,
-              cx: "50%",
-              cy: "50%",
-              innerRadius: 70,
-              outerRadius: 90,
-              paddingAngle: 8,
-              dataKey: "value",
-              stroke: "none",
-              onMouseEnter: (_: any, index: number) => setActiveIndex(index),
-              onMouseLeave: () => setActiveIndex(-1),
-              activeIndex: activeIndex,
-              activeShape: (props: any) => {
-                const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, payload } = props;
-                return (
-                  <g>
-                    <text x={cx} y={cy} dy={8} textAnchor="middle" className={styles.centerText}>
-                      {payload.value}%
-                    </text>
-                    <Sector
-                      cx={cx} cy={cy}
-                      innerRadius={innerRadius}
-                      outerRadius={outerRadius + 6}
-                      startAngle={startAngle}
-                      endAngle={endAngle}
-                      fill={fill}
-                    />
-                  </g>
-                );
-              }
-            } as any)}
+            data={dados}
+            cx="50%"
+            cy="50%"
+            innerRadius={85}
+            outerRadius={115}
+            paddingAngle={0}
+            dataKey="value"
+            stroke="none"
+            // Corrigido: Removido 'name' não utilizado para sumir o erro 6133
+            label={({ value }) => `${value}%`} 
+            labelLine={false}
+            onMouseEnter={(_, index) => setActiveIndex(index)}
+            onMouseLeave={() => setActiveIndex(null)}
           >
             {dados.map((_, index) => (
               <Cell 
                 key={`cell-${index}`} 
                 fill={COLORS[index % COLORS.length]} 
-                style={{ filter: `drop-shadow(0px 0px 4px ${COLORS[index % COLORS.length]}88)` }}
+                style={{ cursor: 'pointer', outline: 'none' }}
               />
             ))}
           </Pie>
 
+          <Tooltip 
+            formatter={(value: any) => [`${value}%`, 'Participação']}
+            contentStyle={{ backgroundColor: '#1a1a1a', border: 'none', borderRadius: '8px', color: '#fff' }}
+          />
+          
           <Legend 
             verticalAlign="bottom" 
             align="center"
             iconType="circle"
-            wrapperStyle={{ color: '#cbd5e1' }}
+            formatter={(value) => <span style={{ color: '#fff', fontSize: '14px', marginRight: '10px' }}>{value}</span>}
           />
         </PieChart>
       </ResponsiveContainer>
