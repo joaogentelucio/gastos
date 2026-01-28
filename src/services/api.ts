@@ -13,7 +13,7 @@ const processQueue = (error: any, token: string | null = null) => {
 
 const api = axios.create({
   baseURL: 'https://gastosservice-ovgk.onrender.com/api/', 
-  timeout: 5000,
+  timeout: 2000,
   withCredentials: true, 
   headers: {
     "Content-Type": "application/json"
@@ -33,7 +33,7 @@ api.interceptors.response.use(
   async error => {
     const originalRequest = error.config;
 
-    if (error.response?.status !== 401) {
+    if (error.response?.status !== 401 || !originalRequest) {
       return Promise.reject(error);
     }
 
@@ -41,15 +41,12 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
     
-    if (originalRequest.url?.includes("Auth/refresh")) {
+    if (originalRequest.url?.includes("Auth/refresh") || originalRequest._retry) {
+      setAccessToken("");
       localStorage.clear();
-      window.location.href = "/app/login";
-      return Promise.reject(error);
-    }
-
-    if (originalRequest._retry) {
-      localStorage.clear();
-      window.location.href = "/app/login";
+      if (window.location.pathname !== "/app/login") {
+          window.location.href = "/app/login";
+      }
       return Promise.reject(error);
     }
 
@@ -77,13 +74,13 @@ api.interceptors.response.use(
 
       originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
       return api(originalRequest);
-    } catch (error) {
-      processQueue(error, null);
+    } catch (refreshError) {
+      processQueue(refreshError, null);
+      setAccessToken("");
       localStorage.clear();
       window.location.href = "/app/login";
-      return Promise.reject(error);
-    } finally
-    {
+      return Promise.reject(refreshError);
+    } finally {
       isRefreshing = false;
     }
   }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'; // Adicionado useRef
+import { useState, useEffect, useRef } from 'react'; 
 import { Navigate, Routes, Route } from "react-router-dom";
 import OthersRoutes from "@/routes/OthersRoutes";
 import { autoLogin } from "@/services/auto-login"; 
@@ -7,11 +7,11 @@ import { useUser } from "@/context/UserContext";
 export default function App() {
   const [estaInicializando, setEstaInicializando] = useState(true);
   const { setUsuario } = useUser();
-  const inicializado = useRef(false); // Ref para garantir execução única
+  const inicializado = useRef(false); 
 
   useEffect(() => {
-    // Se já tentou inicializar, não faz nada (previne loops de renderização)
     if (inicializado.current) return;
+    inicializado.current = true;
 
     async function validarSessao() {
       try {
@@ -20,24 +20,31 @@ export default function App() {
           setUsuario(usuario);
         }
       } catch (error: any) {
-        if (error.response?.status === 401) 
-        {
-          console.log("Nenhuma sessão anterior encontrada. Aguardando login manual.");
+        
+        if (error.response?.status === 401) {
+          console.log("Sessão inexistente ou expirada. Redirecionando para login.");
+          setUsuario(null); 
         } else {
-          console.error("Erro inesperado no login automático:", error);
+          console.error("Erro na comunicação com o servidor:", error);
         }
       } finally {
-        inicializado.current = true;
         setEstaInicializando(false);
       }
     }
 
     validarSessao();
-  }, []); // Array vazio garante que rode apenas UMA VEZ ao montar o App
+  }, [setUsuario]); 
 
   if (estaInicializando) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        backgroundColor: '#121212', 
+        color: '#fff' 
+      }}>
         <p>Carregando sua sessão...</p>
       </div>
     );
