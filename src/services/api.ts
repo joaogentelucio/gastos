@@ -13,7 +13,7 @@ const processQueue = (error: any, token: string | null = null) => {
 
 const api = axios.create({
   baseURL: 'https://gastosservice-ovgk.onrender.com/api/', 
-  timeout: 2000,
+  timeout: 5000,
   withCredentials: true, 
   headers: {
     "Content-Type": "application/json"
