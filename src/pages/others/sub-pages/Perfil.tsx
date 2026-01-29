@@ -1,121 +1,118 @@
-import { useEffect, useState } from 'react';
-import styles from '@/styles/perfil.module.css';
+import { useState } from 'react';
+import styles from './Perfil.module.css';
+import { useUser } from '@/context/UserContext';
 import { useTheme } from '@/context/ThemeContext';
 import api from '@/services/api';
 
-interface Usuario {
-  nome: string;
-  email: string;
-  telefone?: string;
-}
-
 export default function Perfil() {
+  const { usuario, setUsuario, loading } = useUser();
   const { theme } = useTheme();
 
-  const [usuario, setUsuario] = useState<Usuario | null>(null);
-  const [editandoCampo, setEditandoCampo] = useState<string | null>(null);
-  const [valoresEditados, setValoresEditados] = useState<Partial<Usuario>>({});
-  const [loading, setLoading] = useState(false);
+  const [editingField, setEditingField] = useState<null | 'Nome' | 'Email'>(null);
+  const [form, setForm] = useState({
+    Nome: usuario?.Nome || '',
+    Email: usuario?.Email || ''
+  });
+  const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    carregarUsuario();
-  }, []);
+  if (loading) {
+    return <div className={styles.loading}>Carregando perfil...</div>;
+  }
 
-  const carregarUsuario = async () => {
+  if (!usuario) {
+    return <div className={styles.loading}>Usuário não encontrado</div>;
+  }
+
+  const handleSave = async (field: 'Nome' | 'Email') => {
     try {
-      const { data } = await api.get<Usuario>('/Usuario/me');
-      setUsuario(data);
-    } catch (error) {
-      console.error('Erro ao carregar perfil', error);
-    }
-  };
+      setSaving(true);
 
-  const iniciarEdicao = (campo: keyof Usuario) => {
-    setEditandoCampo(campo);
-    setValoresEditados({ [campo]: usuario?.[campo] });
-  };
-
-  const cancelarEdicao = () => {
-    setEditandoCampo(null);
-    setValoresEditados({});
-  };
-
-  const salvarCampo = async (campo: keyof Usuario) => {
-    try {
-      setLoading(true);
-
+      // ajuste o endpoint conforme seu backend
       await api.put('/Usuario/atualizar', {
-        [campo]: valoresEditados[campo],
+        ...usuario,
+        [field]: form[field]
       });
 
-      setUsuario(prev =>
-        prev ? { ...prev, [campo]: valoresEditados[campo] } : prev
-      );
+      setUsuario({
+        ...usuario,
+        [field]: form[field]
+      });
 
-      cancelarEdicao();
-    } catch (error) {
-      console.error('Erro ao salvar campo', error);
+      setEditingField(null);
+    } catch (err) {
+      console.error('Erro ao atualizar perfil', err);
+      alert('Erro ao salvar alteração');
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
-
-  if (!usuario) return null;
 
   return (
     <div
       className={styles.container}
       style={{ backgroundColor: theme.colors.background }}
     >
-      <div
-        className={styles.card}
-        style={{ backgroundColor: theme.colors.bottom }}
-      >
-        <h2 className={styles.title}>Meu Perfil</h2>
+      <div className={styles.card} style={{ backgroundColor: theme.colors.bottom }}>
+        
+        {/* Avatar */}
+        <div className={styles.avatarWrapper}>
+          <img
+            src={usuario.FotoPerfil || '/avatar-default.png'}
+            alt="Foto do perfil"
+            className={styles.avatar}
+          />
+        </div>
 
-        {/* Campo */}
-        {(['nome', 'email', 'telefone'] as (keyof Usuario)[]).map(campo => (
-          <div key={campo} className={styles.field}>
-            <label>{campo === 'nome' ? 'Nome' : campo === 'email' ? 'E-mail' : 'Telefone'}</label>
+        {/* Campo Nome */}
+        <div className={styles.field}>
+          <label>Nome</label>
 
-            {editandoCampo === campo ? (
-              <div className={styles.editRow}>
-                <input
-                  value={valoresEditados[campo] ?? ''}
-                  onChange={e =>
-                    setValoresEditados({ [campo]: e.target.value })
-                  }
-                />
+          {editingField === 'Nome' ? (
+            <div className={styles.editRow}>
+              <input
+                value={form.Nome}
+                onChange={(e) => setForm({ ...form, Nome: e.target.value })}
+              />
+              <button
+                onClick={() => handleSave('Nome')}
+                disabled={saving}
+              >
+                Salvar
+              </button>
+            </div>
+          ) : (
+            <div className={styles.viewRow}>
+              <span>{usuario.Nome}</span>
+              <button onClick={() => setEditingField('Nome')}>Editar</button>
+            </div>
+          )}
+        </div>
 
-                <button
-                  onClick={() => salvarCampo(campo)}
-                  disabled={loading}
-                  className={styles.saveBtn}
-                >
-                  Salvar
-                </button>
+        {/* Campo Email */}
+        <div className={styles.field}>
+          <label>Email</label>
 
-                <button
-                  onClick={cancelarEdicao}
-                  className={styles.cancelBtn}
-                >
-                  Cancelar
-                </button>
-              </div>
-            ) : (
-              <div className={styles.valueRow}>
-                <span>{usuario[campo] || '-'}</span>
+          {editingField === 'Email' ? (
+            <div className={styles.editRow}>
+              <input
+                value={form.Email}
+                onChange={(e) => setForm({ ...form, Email: e.target.value })}
+              />
+              <button
+                onClick={() => handleSave('Email')}
+                disabled={saving}
+              >
+                Salvar
+              </button>
+            </div>
+          ) : (
+            <div className={styles.viewRow}>
+              <span>{usuario.Email}</span>
+              <button onClick={() => setEditingField('Email')}>Editar</button>
+            </div>
+          )}
+        </div>
 
-                <button
-                  className={styles.editBtn}
-                  onClick={() => iniciarEdicao(campo)}
-                >
-                  Editar
-                </button>
-              </div>
-            )}
-          </div>
-        ))}
       </div>
     </div>
   );
