@@ -1,55 +1,83 @@
+/* =========================
+   Container dos Cards
+========================= */
 .container {
-    display: flex;
-    gap: 24px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-    padding: 10px; 
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+  padding: 10px;
 }
 
+/* =========================
+   Card
+========================= */
 .card {
-    width: 310px;
-    height: 180px;
-    display: flex; 
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding-left: 20px;
-    gap: 16px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05); 
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 22px;
+  gap: 14px;
+
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
 
+/* Hover elegante (desktop) */
 .card:hover {
-    transform: translateY(-2px);
-    background-color: #252525; 
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
 }
 
+/* =========================
+   Título
+========================= */
 .title {
-    margin: 0;
-    font-size: 0.85rem; 
-    color: #a0a0a0; 
-    font-weight: 600;
-    text-transform: uppercase; 
-    letter-spacing: 1px;
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
 }
 
+/* =========================
+   Valor principal (KPI)
+========================= */
 .value {
-    font-size: 2.4rem;
-    margin: 12px 0;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: -1px; 
+  font-size: clamp(1.8rem, 3vw, 2.3rem);
+  font-weight: 700;
+  margin: 4px 0;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
 }
 
+/* =========================
+   Informação auxiliar
+========================= */
 .info {
-    color: #666666; 
-    font-size: 0.75rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* =========================
+   Responsividade fina
+========================= */
+@media (max-width: 480px) {
+  .card {
+    padding: 18px;
+  }
+
+  .value {
+    font-size: 1.6rem;
+  }
 }
