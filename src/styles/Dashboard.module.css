@@ -5,39 +5,85 @@
 }
 
 .mainContent {
-    flex-grow: 1;
-    padding: 0 40px;
-    padding-top: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
+
+/* =========================
+   KPIs
+========================= */
 
 .kpiContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
+
+/* Responsividade KPIs */
+@media (max-width: 1024px) {
+  .kpiContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .kpiContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   Gráficos e blocos
+========================= */
 
 .reportBlock {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
+/* Título do bloco */
 .reportBlock h3 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-weight: 600;
-    font-size: 1.5em;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
 }
 
+/* Placeholder de gráfico */
 .chartPlaceholder {
-    height: 300px;
-    background-color: #f9fbfd; 
-    border: 1px dashed #dce1e6; 
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #b0b8c0;
-    font-style: italic;
+  height: 260px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  opacity: 0.6;
+}
+
+/* =========================
+   Ajustes mobile finos
+========================= */
+
+@media (max-width: 480px) {
+  .container {
+    padding: 16px;
+  }
+
+  .mainContent {
+    gap: 24px;
+  }
+
+  .reportBlock {
+    padding: 16px;
+  }
+
+  .chartPlaceholder {
+    height: 200px;
+  }
 }

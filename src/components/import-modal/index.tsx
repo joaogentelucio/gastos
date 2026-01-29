@@ -9,14 +9,26 @@ interface ImportModalProps {
   onImportSuccess: () => void;
 }
 
-export default function ImportModal({ isOpen, onClose, onImportSuccess }: ImportModalProps) {
+export default function ImportModal({
+  isOpen,
+  onClose,
+  onImportSuccess
+}: ImportModalProps) {
   const { theme } = useTheme();
 
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [inputKey, setInputKey] = useState(Date.now());
 
   if (!isOpen) return null;
+
+  const resetState = () => {
+    setFile(null);
+    setError(null);
+    setIsLoading(false);
+    setInputKey(Date.now());
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -45,7 +57,9 @@ export default function ImportModal({ isOpen, onClose, onImportSuccess }: Import
       });
 
       alert(response.data.mensagem || 'Importação realizada com sucesso!');
-      onImportSuccess();
+
+      onImportSuccess(); 
+      resetState();
       onClose();
     } catch (err: any) {
       const mensagem =
@@ -65,27 +79,34 @@ export default function ImportModal({ isOpen, onClose, onImportSuccess }: Import
     >
       <div className={styles.header}>
         <h3 style={{ color: theme.colors.text }}>Importar Arquivo</h3>
-        <button className={styles.closeButton} onClick={onClose}>
+        <button
+          className={styles.closeButton}
+          onClick={() => {
+            resetState();
+            onClose();
+          }}
+          disabled={isLoading}
+        >
           ×
         </button>
       </div>
 
-      <div className={styles.dropzone}>
+      <div
+        className={`${styles.dropzone} ${isLoading ? styles.disabled : ''}`}
+      >
         <p className={styles.dropText}>
           Arraste e solte o arquivo aqui ou <span>clique para escolher</span>
         </p>
 
-        {file && (
-          <p className={styles.fileName}>
-            📄 {file.name}
-          </p>
-        )}
+        {file && <p className={styles.fileName}>📄 {file.name}</p>}
 
         <input
+          key={inputKey}
           type="file"
           accept=".csv,.xlsx"
           className={styles.fileInput}
           onChange={handleFileChange}
+          disabled={isLoading}
         />
       </div>
 
@@ -93,7 +114,10 @@ export default function ImportModal({ isOpen, onClose, onImportSuccess }: Import
 
       <div className={styles.buttonGroup}>
         <button
-          onClick={onClose}
+          onClick={() => {
+            resetState();
+            onClose();
+          }}
           className={styles.cancelButton}
           disabled={isLoading}
         >
