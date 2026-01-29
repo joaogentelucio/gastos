@@ -9,6 +9,7 @@ import { Loading } from '@/components/loading';
 export default function Despesas() {
   const [isLoading, setIsLoading] = useState(false);
   const [despesas, setDespesas] = useState<Despesa[]>([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [expenseName, setExpenseName] = useState('');
@@ -52,9 +53,34 @@ export default function Despesas() {
       {isLoading && <Loading />}
       <div className={styles.topSection}>
         <h2 className={styles.title}>Minhas Despesas</h2>
-        <button className={styles.btn} onClick={() => setIsModalOpen(true)}>
-          Nova Despesa
-        </button>
+        <div className={styles.splitButton}>
+          <button
+            className={styles.mainButton}
+            onClick={() => setIsModalOpen(true)}
+          >
+            Nova despesa
+          </button>
+
+          <button
+            className={styles.arrowButton}
+            onClick={() => setIsDropdownOpen(prev => !prev)}
+            aria-label="Mais opções"
+          >
+            ▼
+          </button>
+          {isDropdownOpen && (
+            <div className={styles.dropdown}>
+              <button
+                onClick={() => {
+                  setIsModalOpen(true);
+                  setIsDropdownOpen(false);
+                }}
+              >
+                Nova despesa fixa
+              </button>
+            </div>
+          )}
+        </div>
       </div>
       
       <div className={styles.contentSection}>

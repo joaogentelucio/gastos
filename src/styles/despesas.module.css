@@ -21,20 +21,41 @@
   font-weight: 600;
 }
 
-.btn {
-    width: 120px;
-    height: 40px;
-    background-color: #50c082;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #ccc;
-    font-weight: bold;
-    transition: opacity 0.2s;
+.splitButton {
+  display: inline-flex;
+  border-radius: 12px;
+  overflow: hidden; /* essencial para unir visualmente */
+  background-color: #50c082;
 }
 
-.btn:hover {
-  opacity: 0.9;
+.mainButton {
+  padding: 0 24px;
+  height: 48px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.arrowButton {
+  width: 52px;
+  height: 48px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.mainButton:hover,
+.arrowButton:hover {
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
 .contentSection {
