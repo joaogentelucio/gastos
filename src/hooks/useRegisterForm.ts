@@ -49,7 +49,7 @@ export function useRegisterForm() {
 
     try {
       await Register(fotoPerfil, nome, email, senha);
-      navigate("/app/login");
+      navigate("/login");
     } catch {
       setError("Erro ao registrar. Tente novamente.");
     } finally {

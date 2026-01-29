@@ -9,14 +9,12 @@ export default function ProtectedRoute({ children }: Props) {
   const { usuario, loading } = useUser();
 
   if (loading) {
-    return <div>Carregando...</div>; // Ou um Spinner
+    return <div>Carregando...</div>; 
   }
 
-  // 2. Se terminou de carregar e não tem usuário, aí sim manda para o login
   if (!usuario) {
     return <Navigate to="/login" replace />;
   }
 
-  // 3. Se tem usuário, libera o acesso
   return <>{children}</>;
 }

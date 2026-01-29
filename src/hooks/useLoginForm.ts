@@ -53,7 +53,7 @@ export function useLoginForm() {
 
       console.log('Login bem-sucedido. Usuário:', usuario);
 
-      navigate('/app/dashboard');
+      navigate('/dashboard');
     } catch (err) {
       setError('Falha na autenticação. Verifique suas credenciais.');
     } finally {

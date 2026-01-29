@@ -36,7 +36,7 @@ export default function OthersRoutes() {
                 <Route path="login" element={usuario ? <Navigate to="dashboard"/> : <Login />} />
                 <Route path="register" element={usuario ? <Navigate to="dashboard"/> : <Register />} />
             
-                <Route path="*" element={<Navigate to={usuario ? "/app/dashboard" : "/login"} replace />} />
+                <Route path="*" element={<Navigate to={usuario ? "/dashboard" : "/login"} replace />} />
             </Routes>
         </>
     )
