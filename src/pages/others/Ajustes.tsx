@@ -46,7 +46,6 @@ export default function Ajustes() {
         </button>
       </aside>
 
-      {/* Lado Direito - Conteúdo */}
       <main className={styles.main}>
         <Outlet />
       </main>
