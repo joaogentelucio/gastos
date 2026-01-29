@@ -6,9 +6,10 @@ import api from '@/services/api';
 interface ImportModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onImportSuccess: () => void;
 }
 
-export default function ImportModal({ isOpen, onClose }: ImportModalProps) {
+export default function ImportModal({ isOpen, onClose, onImportSuccess }: ImportModalProps) {
   const { theme } = useTheme();
 
   const [file, setFile] = useState<File | null>(null);
@@ -44,6 +45,7 @@ export default function ImportModal({ isOpen, onClose }: ImportModalProps) {
       });
 
       alert(response.data.mensagem || 'Importação realizada com sucesso!');
+      onImportSuccess();
       onClose();
     } catch (err: any) {
       const mensagem =

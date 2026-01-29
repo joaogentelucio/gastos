@@ -143,6 +143,7 @@ export default function Despesas() {
       <ImportModal
         isOpen={isImportModalOpen}
         onClose={() => setIsImportModalOpen(false)}
+        onImportSuccess={carregarDespesas}
       />
     </div>
   );
