@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import styles from '@/styles/Dashboard.module.css'; 
 import { useTheme } from '@/context/ThemeContext';
 import api from "@/services/api";
@@ -41,6 +42,9 @@ export default function Dashboard() {
 
   return (
     <div className={styles.container} style={{ backgroundColor: theme.colors.background }}>
+      <Helmet>
+        <title>Dashboard | Codpex Gastos</title>
+      </Helmet>
       <main className={styles.mainContent}>
         
         <div className={styles.kpiContainer}>
