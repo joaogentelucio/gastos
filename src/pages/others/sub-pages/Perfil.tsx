@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from './Perfil.module.css';
+import styles from '@/styles/perfil.module.css';
 import { useTheme } from '@/context/ThemeContext';
 import api from '@/services/api';
 
