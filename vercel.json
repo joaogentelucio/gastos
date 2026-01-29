@@ -1,7 +1,5 @@
 {
  "rewrites": [
-    { "source": "/gastos/assets/(.*)", "destination": "/assets/$1" },
-    { "source": "/gastos/(.*)", "destination": "/index.html" },
-    { "source": "/gastos", "destination": "/index.html" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

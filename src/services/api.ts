@@ -44,8 +44,8 @@ api.interceptors.response.use(
     if (originalRequest.url?.includes("Auth/refresh") || originalRequest._retry) {
       setAccessToken("");
       localStorage.clear();
-      if (window.location.pathname !== "/gastos/login") {
-          window.location.href = "/gastos/login";
+      if (window.location.pathname !== "/login") {
+          window.location.href = "/login";
       }
       return Promise.reject(error);
     }
@@ -78,7 +78,7 @@ api.interceptors.response.use(
       processQueue(refreshError, null);
       setAccessToken("");
       localStorage.clear();
-      window.location.href = "/gastos/login";
+      window.location.href = "/login";
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;

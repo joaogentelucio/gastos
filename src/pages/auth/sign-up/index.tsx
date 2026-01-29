@@ -118,7 +118,7 @@ export default function Register() {
           {error && <p className={styles.error}>{error}</p>}
 
           <div className={styles.linksRow}>
-            <Link to="/profissional/login" className={styles.link} style={{ color: theme.colors.primary }}>Já tenho uma conta</Link>
+            <Link to="/login" className={styles.link} style={{ color: theme.colors.primary }}>Já tenho uma conta</Link>
           </div>
 
           <button

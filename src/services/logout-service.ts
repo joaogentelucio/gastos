@@ -11,6 +11,6 @@ export async function Logout() {
 
     localStorage.clear(); 
 
-    window.location.href = "/gastos/login";
+    window.location.href = "/login";
   }
 }
