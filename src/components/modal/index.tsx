@@ -2,7 +2,6 @@ import styles from './styles.module.css';
 import { useTheme } from '@/context/ThemeContext';
 import { CriarDespesaDTO } from "@/types/despesas-types";
 
-// 1. Definição clara da Interface
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
