@@ -1,6 +1,9 @@
 {
+  "redirects": [
+    { "source": "/", "destination": "/gastos", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/gastos", "destination": "/index.html" },
-    { "source": "/gastos/(.*)", "destination": "/index.html" }
+    { "source": "/gastos/(.*)", "destination": "/index.html" },
+    { "source": "/gastos", "destination": "/index.html" }
   ]
 }
