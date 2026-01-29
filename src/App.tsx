@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'; 
-import { Navigate, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import OthersRoutes from "@/routes/OthersRoutes";
 import { autoLogin } from "@/services/auto-login"; 
 import { useUser } from "@/context/UserContext"; 
@@ -52,8 +52,8 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/gastos" replace />} />
-      <Route path="/gastos/*" element={<OthersRoutes/>} />
+      <Route path="/" element={<OthersRoutes />} />
+      <Route path="/*" element={<OthersRoutes/>} />
     </Routes>
   );
 };
