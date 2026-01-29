@@ -68,7 +68,7 @@ export default function Header({isSidebarOpen, toggleSidebar }: HeaderProps) {
           />
         {isProfileMenuOpen && (
           <div className={styles.profileMenu} style={{ backgroundColor: theme.colors.background2}}>
-            <Link to="/app/ajustes" state={{ from: location.pathname }} style={{ color: theme.colors.text}}>Ajustes</Link>
+            <Link to="/ajustes" state={{ from: location.pathname }} style={{ color: theme.colors.text}}>Ajustes</Link>
           </div>
         )}
       </div>

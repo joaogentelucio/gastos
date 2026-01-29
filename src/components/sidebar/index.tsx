@@ -49,13 +49,13 @@ export function Sidebar({isMenuOpen, closeMenu}: SidebarProps) {
       </button>
       <ul className={styles.navList} style={{ color: theme.colors.text}}>
         <li className={styles.navItem}>
-          <Link to="/app/dashboard" onClick={closeMenu} className={styles.navLink}>
+          <Link to="/dashboard" onClick={closeMenu} className={styles.navLink}>
            <FaHome className={styles.navIcon} />
             Dashboard
           </Link>
         </li>
         <li className={styles.navItem}>
-          <Link to="/app/despesas" onClick={closeMenu} className={styles.navLink}>
+          <Link to="/despesas" onClick={closeMenu} className={styles.navLink}>
             <FaUserCircle className={styles.navIcon} />
             Despesas
           </Link>

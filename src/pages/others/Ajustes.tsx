@@ -10,7 +10,7 @@ export default function Ajustes() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [origemFixa] = useState(location.state?.from || '/app/dashboard');
+  const [origemFixa] = useState(location.state?.from || '/dashboard');
 
   const handleBack = () => {
     navigate(origemFixa);
