@@ -79,6 +79,10 @@
   cursor: pointer;
   opacity: 0.85;
   transition: opacity 0.2s;
+
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .logout:hover {
@@ -196,6 +200,9 @@
   }
 
   .logout {
+    font-size: 11px;
+    padding: 16px 10px;
+    line-height: 1.2;
     text-align: center;
   }
 }
