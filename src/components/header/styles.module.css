@@ -74,7 +74,7 @@
 /* Menu Suspenso */
 .profileMenu {
   position: absolute;
-  top: 110%; /* Fica logo abaixo do trigger */
+  top: 110%; 
   right: 0;
   width: 300px;
   background-color: white;
@@ -87,12 +87,16 @@
 
 /* Parte Azul */
 .menuHeader {
-  background-color: #00468c;
+  width: 300px;
+  position: absolute;
+  top: 110%; 
+  right: 0;
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
+  overflow: hidden;
+  z-index: 1000;
 }
 
 .userInfo {
