@@ -81,11 +81,10 @@ export default function Header({isSidebarOpen, toggleSidebar }: HeaderProps) {
             <div className={styles.userInfo}>
               <span className={styles.userName}>{usuario?.Nome}</span>
             </div>
-            <div 
-              className={styles.menuActions}
-              style={{ color: theme.colors.primary }}
-            >
-              <Link to="/ajustes">Ajustes</Link>
+            <div className={styles.menuActions}>
+              <Link to="/ajustes" style={{ color: theme.colors.primary }}>
+                Ajustes
+              </Link>
             </div>
           </div>
         )}
