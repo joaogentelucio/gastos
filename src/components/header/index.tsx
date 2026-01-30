@@ -74,23 +74,14 @@ export default function Header({isSidebarOpen, toggleSidebar }: HeaderProps) {
         </div>
 
         {isProfileMenuOpen && (
-          <div className={styles.profileMenu}>
-            <div className={styles.menuHeader}>
-              <div className={styles.userInfo}>
-                <span className={styles.userName}>{usuario?.Nome || "joaovitor.rg"}</span>
-                <span className={styles.userSystem}>RGSystem</span>
-              </div>
-              <button className={styles.logoutButton} onClick={() => {}}>
-                Sair do sistema
-              </button>
+          <div 
+            className={styles.menuHeader}
+            style={{ backgroundColor: theme.colors.background2, color: theme.colors.text }}
+            >
+            <div className={styles.userInfo}>
+              <span className={styles.userName}>{usuario?.Nome || "joaovitor.rg"}</span>
             </div>
-
-            <div className={styles.menuActions}>
-              <span className={styles.actionsTitle}>AÇÕES</span>
-              <Link to="/preferencias">Preferências</Link>
-              <Link to="/alterar-senha">Alterar senha</Link>
-              <Link to="/cadastro">Cadastro</Link>
-            </div>
+            <Link to="/ajustes">Ajustes</Link>
           </div>
         )}
       </div>
