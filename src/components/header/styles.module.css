@@ -5,20 +5,18 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 24px;
-  
-  /* Glassmorphism Refinado */
-  background: rgba(255, 255, 255, 0.8);
+  background-color: transparent;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
   
-  position: fixed; /* Fixa o topo */
+  position: fixed; 
   top: 0;
   right: 0;
   z-index: 100;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Suaviza a abertura da sidebar */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
 }
 
 .headerFull {
