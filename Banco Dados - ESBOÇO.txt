@@ -17,6 +17,11 @@ ALTER TABLE USUARIOS
 ADD CONSTRAINT check_plano 
 CHECK (PLANO_ATUAL IN ('FREE', 'PRO'));
 
+ALTER TABLE USUARIOS
+ADD COLUMN DATA_VENCIMENTO_PRO TIMESTAMP;
+
+CREATE INDEX idx_usuarios_vencimento ON USUARIOS(DATA_VENCIMENTO_PRO);
+
 select 
 	us.nome,
 	dp.nome,
@@ -34,7 +39,7 @@ inner join FORMA_PAGAMENTO fp on fp.id_forma_pagamento = dp.fk_id_forma_pagament
 where us.id_usuario = 1;
 
 
-select * from despesas;
+select * from usuarios;
 
 CREATE TABLE DESPESAS (
     ID_DESPESA SERIAL PRIMARY KEY,
@@ -95,6 +100,13 @@ VALUES ('FREE', 0);
 
 INSERT INTO PLANOS (NOME, PRECO, STRIPE_PRICE_ID)
 VALUES ('PRO', 9.90, 'price_xxx');
+
+
+UPDATE PLANOS 
+SET STRIPE_PRICE_ID = 'price_1SvJBCLYWoh62EDmB3HafBVx' 
+WHERE NOME = 'PRO';
+
+select * from planos;
 
 CREATE TABLE ASSINATURAS (
     ID_ASSINATURA SERIAL PRIMARY KEY,
