@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'
+import { FaBars } from 'react-icons/fa';
 import styles from './styles.module.css'
 import { useTheme } from '@/context/ThemeContext';
 import api from "@/services/api";
@@ -54,10 +55,9 @@ export default function Header({isSidebarOpen, toggleSidebar }: HeaderProps) {
         style={{ color: theme.colors.text }}
         aria-label="Toggle sidebar"
       >
-        &#9776;
+        <FaBars />
       </button>
       <div className={styles.profileWrapper} ref={profileMenuRef}>
-        {/* Gatilho do Menu: Foto + Seta */}
         <div className={styles.profileTrigger} onClick={handleProfileClick}>
           <img
             src={fotoUrl}
