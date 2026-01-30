@@ -44,7 +44,10 @@ export default function Header({isSidebarOpen, toggleSidebar }: HeaderProps) {
   }, []);
 
   return (
-    <header className={`${styles.header} ${isSidebarOpen ? styles.headerWithSidebar : styles.headerFull}`}>
+    <header 
+      className={`${styles.header} ${isSidebarOpen ? styles.headerWithSidebar : styles.headerFull}`}
+      style={{ backgroundColor: theme.colors.bottom, color: theme.colors.text }}
+    >
       <button
         className={styles.menuIcon}
         onClick={toggleSidebar}
