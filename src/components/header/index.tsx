@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useLocation  } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styles from './styles.module.css'
 import { useTheme } from '@/context/ThemeContext';
 import api from "@/services/api";
@@ -14,7 +14,6 @@ interface HeaderProps {
 export default function Header({isSidebarOpen, toggleSidebar }: HeaderProps) {
   const { theme } = useTheme();
   const { usuario } = useUser();
-  const location = useLocation();
 
   const baseUrl = api.defaults.baseURL?.replace('/api', '') + '/uploads/';
   const temFoto = usuario?.FotoPerfil && usuario.FotoPerfil.trim() !== "" && usuario.FotoPerfil !== "SEM_FOTO";
@@ -67,8 +66,28 @@ export default function Header({isSidebarOpen, toggleSidebar }: HeaderProps) {
             }}
           />
         {isProfileMenuOpen && (
-          <div className={styles.profileMenu} style={{ backgroundColor: theme.colors.background2}}>
-            <Link to="/ajustes" state={{ from: location.pathname }} style={{ color: theme.colors.text}}>Ajustes</Link>
+          <div className={styles.profileMenu}>
+            {/* Cabeçalho do Menu */}
+            <div className={styles.menuHeader}>
+              <div className={styles.userInfo}>
+                <span className={styles.userName}>{usuario?.Nome || "joaovitor.rg"}</span>
+                <span className={styles.userSystem}>RGSystem</span>
+              </div>
+              <button 
+                className={styles.logoutButton}
+                onClick={() => {/* Sua lógica de logout aqui */}}
+              >
+                Sair do sistema
+              </button>
+            </div>
+
+            {/* Lista de Links */}
+            <div className={styles.menuActions}>
+              <span className={styles.actionsTitle}>AÇÕES</span>
+              <Link to="/preferencias">Preferências</Link>
+              <Link to="/alterar-senha">Alterar senha</Link>
+              <Link to="/cadastro">Cadastro</Link>
+            </div>
           </div>
         )}
       </div>
