@@ -28,12 +28,51 @@
   width: calc(100% - 240px);
 }
 
-/* Ajuste para telas pequenas */
 @media (max-width: 768px) {
   .headerWithSidebar {
     left: 0;
     width: 100%;
   }
+}
+
+.menuIcon {
+  /* Remove estilos padrão do botão */
+  background: transparent;
+  border: none;
+  outline: none;
+  
+  /* Alinhamento */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Tamanho e Espaçamento */
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 8px; /* Cantos levemente arredondados */
+  
+  /* O ícone FaBars herda o tamanho daqui */
+  font-size: 24px; 
+  
+  /* Suavidade na interação */
+  transition: all 0.2s ease-in-out;
+}
+
+.menuIcon:hover {
+  /* Efeito de fundo sutil ao passar o mouse */
+  background-color: rgba(0, 0, 0, 0.06);
+  transform: scale(1.05);
+}
+
+.menuIcon:active {
+  transform: scale(0.95);
+}
+
+/* Garante que o ícone dentro do botão preencha o espaço corretamente */
+.menuIcon svg {
+  display: block;
 }
 
 .profileWrapper {
@@ -42,7 +81,6 @@
   align-items: center;
 }
 
-/* Container que envolve a foto e a setinha */
 .profileTrigger {
   display: flex;
   align-items: center;
