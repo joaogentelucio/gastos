@@ -54,34 +54,34 @@ export default function Header({isSidebarOpen, toggleSidebar }: HeaderProps) {
         &#9776;
       </button>
       <div className={styles.profileWrapper} ref={profileMenuRef}>
-          <img 
+        {/* Gatilho do Menu: Foto + Seta */}
+        <div className={styles.profileTrigger} onClick={handleProfileClick}>
+          <img
             src={fotoUrl}
-            className={styles.fotoPerfil} 
-            style={{ borderColor: theme.colors.bottom}}
-            onClick={handleProfileClick}
+            className={styles.fotoPerfil}
+            style={{ borderColor: theme.colors.bottom }}
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.onerror = null; 
+              target.onerror = null;
               target.src = defaultProfileImg;
             }}
+            alt="Profile"
           />
+          <span className={styles.arrowIcon}>▼</span>
+        </div>
+
         {isProfileMenuOpen && (
           <div className={styles.profileMenu}>
-            {/* Cabeçalho do Menu */}
             <div className={styles.menuHeader}>
               <div className={styles.userInfo}>
                 <span className={styles.userName}>{usuario?.Nome || "joaovitor.rg"}</span>
                 <span className={styles.userSystem}>RGSystem</span>
               </div>
-              <button 
-                className={styles.logoutButton}
-                onClick={() => {/* Sua lógica de logout aqui */}}
-              >
+              <button className={styles.logoutButton} onClick={() => {}}>
                 Sair do sistema
               </button>
             </div>
 
-            {/* Lista de Links */}
             <div className={styles.menuActions}>
               <span className={styles.actionsTitle}>AÇÕES</span>
               <Link to="/preferencias">Preferências</Link>

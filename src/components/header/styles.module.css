@@ -43,107 +43,116 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+}
+
+/* Container que envolve a foto e a setinha */
+.profileTrigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.profileTrigger:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .fotoPerfil {
-  width: 38px;
-  height: 38px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
-  cursor: pointer;
   object-fit: cover;
-  border: 2px solid transparent;
-  transition: border-color 0.2s, transform 0.2s;
+  border: 2px solid #ccc;
 }
 
-.fotoPerfil:hover {
-  transform: scale(1.05);
-  border-color: #00468c;
+.arrowIcon {
+  font-size: 10px;
+  color: #666;
+  transition: transform 0.3s ease;
 }
 
+/* Menu Suspenso */
 .profileMenu {
   position: absolute;
-  top: calc(100% + 10px); /* Espaçamento elegante abaixo do avatar */
+  top: 110%; /* Fica logo abaixo do trigger */
   right: 0;
-  width: 280px;
+  width: 300px;
   background-color: white;
-  border-radius: 12px; /* Cantos mais modernos */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e1e4e8;
   overflow: hidden;
   z-index: 1000;
-  animation: slideDown 0.2s ease-out; /* Animação ao abrir */
 }
 
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* Parte Azul */
 .menuHeader {
-  background: linear-gradient(135deg, #00468c 0%, #0056ad 100%);
-  padding: 16px 20px;
+  background-color: #00468c;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: white;
 }
 
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
 .userName {
-  display: block;
-  font-weight: 600;
-  font-size: 0.95rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .userSystem {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 0.85rem;
   opacity: 0.8;
 }
 
 .logoutButton {
-  margin-top: 12px;
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.15);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 6px 0;
-  border-radius: 6px;
-  font-size: 0.8rem;
+  background-color: white;
+  color: #00468c;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.75rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: opacity 0.2s;
 }
 
 .logoutButton:hover {
-  background-color: white;
-  color: #00468c;
+  opacity: 0.9;
 }
 
+/* Parte Branca (Ações) */
 .menuActions {
-  padding: 8px; /* Padding menor para itens de lista */
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: white;
 }
 
 .actionsTitle {
-  display: block;
-  padding: 8px 12px;
   font-size: 0.7rem;
-  color: #999;
-  font-weight: 700;
-  letter-spacing: 1px;
+  color: #888;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
 }
 
 .menuActions a {
   text-decoration: none;
-  color: #444;
+  color: #5c7cfa; /* Azul dos links da imagem */
   font-size: 0.9rem;
-  padding: 10px 12px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  transition: background 0.2s;
+  font-weight: 500;
 }
 
 .menuActions a:hover {
-  background-color: #f4f7fe;
-  color: #00468c;
+  text-decoration: underline;
 }
