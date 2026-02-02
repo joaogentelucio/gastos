@@ -8,7 +8,7 @@ export default function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
 
-  const noHeaderRoutes = ['/login', '/register', '/ajustes', '/perfil', 'temas', 'notificacoes'];
+  const noHeaderRoutes = ['/login', '/register', '/ajustes', '/perfil', 'temas', 'notificacoes', 'assinatura'];
   const showHeader = !noHeaderRoutes.some(route =>
     location.pathname.endsWith(route)
   );
