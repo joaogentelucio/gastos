@@ -2,11 +2,14 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { getAccessToken, setAccessToken } from "@/services/auth-token";
 import { Logout as authLogout } from "@/services/logout-service";
 
+type Plano = "FREE" | "PRO";
+
 type Usuario = {
   Id: number;
   Nome: string;
   Email: string;
   FotoPerfil: string;
+  PlanoAtual: Plano;
 };
 
 type UserContextType = {
@@ -18,17 +21,16 @@ type UserContextType = {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-const capitalizeName = (nome: string) => {
-  return nome
+const capitalizeName = (nome: string) =>
+  nome
     .toLowerCase()
     .split(" ")
-    .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+    .map(p => p.charAt(0).toUpperCase() + p.slice(1))
     .join(" ");
-};
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [usuario, setUsuarioState] = useState<Usuario | null>(null);
-  const [loading, setLoading ] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = getAccessToken();
@@ -40,30 +42,34 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     if (usuarioStr) {
       setUsuarioState(JSON.parse(usuarioStr));
     }
+
+    setLoading(false);
   }, []);
 
-  const setUsuario = (novoUsuario: Usuario | null) => {
+  const setUsuario = (novoUsuario: any | null) => {
     if (novoUsuario) {
-      const usuarioFormatado = {
-        ...novoUsuario,
+      const usuarioFormatado: Usuario = {
+        Id: novoUsuario.IdUsuario ?? novoUsuario.Id,
         Nome: capitalizeName(novoUsuario.Nome),
         Email: novoUsuario.Email.toLowerCase(),
+        FotoPerfil: novoUsuario.FotoPerfil,
+        PlanoAtual: novoUsuario.PlanoAtual ?? "FREE",
       };
-      
+
       setUsuarioState(usuarioFormatado);
       localStorage.setItem("usuario", JSON.stringify(usuarioFormatado));
     } else {
       localStorage.removeItem("usuario");
       setUsuarioState(null);
     }
-    setLoading(false);
   };
 
   const logout = async () => {
-    setUsuarioState(null); 
-    await authLogout();    
+    setUsuarioState(null);
+    localStorage.removeItem("usuario");
+    await authLogout();
   };
-  
+
   return (
     <UserContext.Provider value={{ usuario, setUsuario, logout, loading }}>
       {children}

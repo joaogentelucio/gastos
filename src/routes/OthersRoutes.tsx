@@ -13,6 +13,7 @@ import Ajustes from "@/pages/others/Ajustes";
 import Perfil from "@/pages/others/sub-pages/Perfil";
 import Temas from "@/pages/others/sub-pages/Temas";
 import Notificacoes from "@/pages/others/sub-pages/Notificacoes";
+import Assinatura from "@/pages/others/sub-pages/Assinatura";
 
 import { useUser } from '@/context/UserContext';
 
@@ -30,6 +31,7 @@ export default function OthersRoutes() {
                     <Route path="perfil" element={<Perfil />} />
                     <Route path="temas" element={<Temas />} />
                     <Route path="notificacoes" element={<Notificacoes />} />
+                    <Route path="assinatura" element={<Assinatura />} />
                 </Route>
                 </Route>
                 

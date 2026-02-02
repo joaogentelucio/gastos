@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { FaUser, FaBell, FaChevronLeft, FaBrush } from 'react-icons/fa';
+import { FaUser, FaBell, FaChevronLeft, FaBrush, FaCreditCard } from 'react-icons/fa';
 import styles from '@/styles/ajustes.module.css';
 import { useTheme } from '@/context/ThemeContext';
 import { Logout } from '@/services/logout-service';
@@ -38,6 +38,10 @@ export default function Ajustes() {
           <div className={styles.menuItem} onClick={() => navigate('notificacoes')} style={{ color: theme.colors.text}}>
             <FaBell size={22} />
             <span>Notificações</span>
+          </div>
+          <div className={styles.menuItem} onClick={() => navigate('assinatura')} style={{ color: theme.colors.text}}>
+            <FaCreditCard size={22} />
+            <span>Assinatura</span>
           </div>
         </div>
 
