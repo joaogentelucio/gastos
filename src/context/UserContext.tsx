@@ -15,6 +15,7 @@ type Usuario = {
 type UserContextType = {
   usuario: Usuario | null;
   setUsuario: (usuario: Usuario | null) => void;
+  refreshUser: () => Promise<void>;
   logout: () => Promise<void>;
   loading: boolean;
 };
@@ -32,20 +33,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [usuario, setUsuarioState] = useState<Usuario | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const token = getAccessToken();
-    if (token) {
-      setAccessToken(token);
-    }
-
-    const usuarioStr = localStorage.getItem("usuario");
-    if (usuarioStr) {
-      setUsuarioState(JSON.parse(usuarioStr));
-    }
-
-    setLoading(false);
-  }, []);
-
   const setUsuario = (novoUsuario: any | null) => {
     if (novoUsuario) {
       const usuarioFormatado: Usuario = {
@@ -59,8 +46,28 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setUsuarioState(usuarioFormatado);
       localStorage.setItem("usuario", JSON.stringify(usuarioFormatado));
     } else {
-      localStorage.removeItem("usuario");
       setUsuarioState(null);
+      localStorage.removeItem("usuario");
+    }
+  };
+
+  const refreshUser = async () => {
+    try {
+      const response = await fetch("/api/auth/me", {
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`
+        }
+      });
+
+      if (!response.ok) throw new Error();
+
+      const data = await response.json();
+      setUsuario(data.usuario);
+    } catch {
+      setUsuario(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,8 +77,19 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     await authLogout();
   };
 
+  useEffect(() => {
+    const token = getAccessToken();
+    if (token) {
+      setAccessToken(token);
+    }
+
+    refreshUser();
+  }, []);
+
   return (
-    <UserContext.Provider value={{ usuario, setUsuario, logout, loading }}>
+    <UserContext.Provider
+      value={{ usuario, setUsuario, refreshUser, logout, loading }}
+    >
       {children}
     </UserContext.Provider>
   );
