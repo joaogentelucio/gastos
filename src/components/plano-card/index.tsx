@@ -1,10 +1,10 @@
 import styles from './styles.module.css';
+import { useUser } from "@/context/UserContext";
 
 type PlanCardProps = {
-  title: string;
-  price: string;
+  title: "FREE" | "PRO";
+   price: string;
   features: string[];
-  isActive: boolean;
   buttonLabel: string;
   loading?: boolean;
   onAction: () => void;
@@ -15,20 +15,20 @@ export default function PlanoCard({
   title,
   price,
   features,
-  isActive,
   buttonLabel,
   loading = false,
   onAction,
   highlight = false
 }: PlanCardProps) {
+  const { usuario } = useUser();
+
+  const planoAtual = usuario?.PlanoAtual;
+  const isActive = planoAtual === title;
+
   return (
-    <div
-      className={`${styles.card} ${highlight ? styles.highlight : ""}`}
-    >
+    <div className={`${styles.card} ${highlight ? styles.highlight : ""}`}>
       {highlight && (
-        <span className={styles.badge}>
-          Recomendado
-        </span>
+        <span className={styles.badge}>Recomendado</span>
       )}
 
       <h2 className={styles.title}>{title}</h2>
@@ -36,9 +36,7 @@ export default function PlanoCard({
       <p className={styles.price}>{price}</p>
 
       {isActive && (
-        <p className={styles.active}>
-          Plano ativo
-        </p>
+        <p className={styles.active}>Plano ativo</p>
       )}
 
       <ul className={styles.features}>
@@ -49,12 +47,12 @@ export default function PlanoCard({
 
       <button
         onClick={onAction}
-        disabled={loading}
+        disabled={loading || isActive}
         className={`${styles.button} ${
           isActive ? styles.buttonDisabled : styles.buttonPrimary
         }`}
       >
-        {loading ? "Aguarde..." : buttonLabel}
+        {loading ? "Aguarde..." : isActive ? "Plano atual" : buttonLabel}
       </button>
     </div>
   );

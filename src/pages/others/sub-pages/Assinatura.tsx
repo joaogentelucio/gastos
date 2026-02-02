@@ -31,32 +31,26 @@ export default function Assinatura() {
       <h1 className={styles.title}>Planos</h1>
 
       <div className={styles.cards}>
-        {/* PLANO FREE */}
         <PlanoCard
-          title="Free"
+          title="FREE"
           price="R$ 0"
           features={[
             "Controle básico de gastos",
-            "Relatórios simples",
+            "Relatórios simples"
           ]}
-          isActive={!isPro}
           buttonLabel="Plano atual"
           onAction={() => {}}
         />
 
-        {/* PLANO PRO */}
         <PlanoCard
-          title="Pro"
+          title="PRO"
           price="R$ XX / mês"
           features={[
             "Relatórios avançados",
             "Exportação de dados",
-            "Suporte prioritário",
+            "Suporte prioritário"
           ]}
-          isActive={isPro}
-          buttonLabel={
-            isPro ? "Gerenciar assinatura" : "Assinar agora"
-          }
+          buttonLabel="Assinar agora"
           loading={loading}
           onAction={handleAction}
           highlight
