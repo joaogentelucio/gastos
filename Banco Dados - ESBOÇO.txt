@@ -39,7 +39,10 @@ inner join FORMA_PAGAMENTO fp on fp.id_forma_pagamento = dp.fk_id_forma_pagament
 where us.id_usuario = 1;
 
 
-select * from usuarios;
+
+select * from usuarios use
+where use.id_usuario = 1;
+select * from assinaturas;
 
 CREATE TABLE DESPESAS (
     ID_DESPESA SERIAL PRIMARY KEY,
