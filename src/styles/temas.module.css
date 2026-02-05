@@ -1,53 +1,117 @@
-.switch {
-  width: 48px;
-  height: 24px;
-  margin: 0;
-  padding: 0;
-  line-height: 0;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* temas.module.css */
+
+.header {
+  margin-bottom: 2.5rem;
+  text-align: left;
 }
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+.header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
 }
 
-.slider {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, #ccc, #aaa);
-  border-radius: 34px;
-  transition: background 0.3s ease;
+.header p {
+  font-size: 1rem;
+  max-width: 500px;
+  line-height: 1.5;
+}
+
+.themeGrid {
+  display: grid;
+  /* Cria colunas responsivas: se couber, lado a lado; se não, empilha */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 900px;
+}
+
+.themeCard {
   cursor: pointer;
+  border-radius: 16px;
+  padding: 1rem;
+  border: 2px solid transparent; /* Reserva o espaço da borda */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-.icon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 24px;
-  height: 24px;
-  font-size: 12px;
-  background-color: white;
-  border-radius: 50%;
+/* Estado de Hover: Leve subida e sombra mais forte */
+.themeCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+/* Quando o tema está selecionado */
+.themeCard.active {
+  border-color: #3b82f6; /* Cor de destaque (Primary) */
+  background-clip: padding-box;
+}
+
+/* Área de Preview (Simulação da Interface) */
+.preview {
+  height: 140px;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 1rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.skeletonLine {
+  height: 10px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+/* Info do Card (Texto e Ícones abaixo do preview) */
+.cardInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.25rem;
+}
+
+.labelGroup {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease;
-  z-index: 2;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
-input:checked + .slider {
-  background: linear-gradient(to right, #2563eb, #0ea5e9);
+.themeIcon {
+  font-size: 1.2rem;
 }
 
-input:checked + .slider .icon {
-  transform: translateX(24px);
+.checkIcon {
+  font-size: 1.2rem;
+  animation: scaleIn 0.3s ease-out;
+}
+
+/* Animação para o check aparecer suavemente */
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Ajustes para telas bem pequenas */
+@media (max-width: 480px) {
+  .header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .themeGrid {
+    grid-template-columns: 1fr;
+  }
 }
