@@ -7,9 +7,9 @@ export default function Ajustes() {
   const { theme } = useTheme();
   
   return (
-    <div className={styles.container} style={{ backgroundColor: theme.colors.background}}>
+    <div className={styles.container} style={{ backgroundColor: theme.colors.background, color: theme.colors.text }}>
       <SidebarAjustes />
-      
+
       <main className={styles.main}>
         <Outlet />
       </main>
