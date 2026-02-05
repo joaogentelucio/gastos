@@ -30,6 +30,8 @@ export default function PlanoCard({
   const planoAtual = usuario?.PlanoAtual;
   const isActive = planoAtual === title;
 
+  const isButtonDisabled = loading || disabled || (isActive && title === "FREE");
+
   return (
     <div
       className={`${styles.card} ${highlight ? styles.highlight : ""}`}
@@ -78,17 +80,17 @@ export default function PlanoCard({
 
       <button
         onClick={onAction}
-        disabled={loading || isActive || disabled}
+        disabled={isButtonDisabled}
         className={styles.button}
         style={{
-          backgroundColor: isActive
+          backgroundColor: isActive && title === "FREE"
             ? theme.colors.inactive
             : theme.colors.primary,
           color: theme.colors.text,
-          cursor: loading || isActive ? "not-allowed" : "pointer"
+          cursor: isButtonDisabled ? "not-allowed" : "pointer"
         }}
       >
-        {loading ? "Aguarde..." : isActive ? "Plano atual" : buttonLabel}
+        {loading ? "Aguarde..." : buttonLabel}
       </button>
     </div>
   );
