@@ -44,6 +44,9 @@ select * from usuarios use
 where use.id_usuario = 1;
 select * from assinaturas;
 
+DELETE FROM ASSINATURAS 
+WHERE ID_ASSINATURA = 1;
+
 CREATE TABLE DESPESAS (
     ID_DESPESA SERIAL PRIMARY KEY,
     NOME VARCHAR(150) NOT NULL,

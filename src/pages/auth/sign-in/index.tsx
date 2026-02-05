@@ -85,7 +85,7 @@ export default function Login() {
               className={isFormValid() && !loading ? styles.button : styles.buttonDisabled}
               style={{
                 backgroundColor: isFormValid() && !loading ? theme.colors.primary : theme.colors.inactive,
-                color: theme.colors.bottom
+                color: theme.colors.text
               }}
             >
               {loading ? <span className={styles.spinner}></span> : 'Entrar'}

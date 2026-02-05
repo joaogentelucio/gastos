@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
+import api from "@/services/api";
 import { getAccessToken, setAccessToken } from "@/services/auth-token";
 import { Logout as authLogout } from "@/services/logout-service";
 
@@ -31,30 +31,13 @@ const capitalizeName = (nome: string) =>
     .join(" ");
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [usuario, setUsuarioState] = useState<Usuario | null>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("usuario");
-      return saved ? JSON.parse(saved) : null;
-    }
-    return null;
-  });
+  const [usuario, setUsuarioState] = useState<Usuario | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const setUsuario = (novoUsuario: any | null) => {
+  const setUsuario = (novoUsuario: Usuario | null) => {
     if (novoUsuario) {
-      const nomeLimpo = novoUsuario.Nome || novoUsuario.unique_name || "Usuário";
-      const emailLimpo = novoUsuario.Email || novoUsuario.email || "";
-
-      const usuarioFormatado: Usuario = {
-        Id: novoUsuario.IdUsuario ?? novoUsuario.Id,
-        Nome: capitalizeName(nomeLimpo),
-        Email: emailLimpo.toLowerCase(),
-        FotoPerfil: novoUsuario.FotoPerfil,
-        PlanoAtual: novoUsuario.PlanoAtual ?? "FREE",
-      };
-
-      setUsuarioState(usuarioFormatado);
-      localStorage.setItem("usuario", JSON.stringify(usuarioFormatado));
+      setUsuarioState(novoUsuario);
+      localStorage.setItem("usuario", JSON.stringify(novoUsuario));
     } else {
       setUsuarioState(null);
       localStorage.removeItem("usuario");
@@ -63,23 +46,31 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const refreshUser = async () => {
     try {
-      const token = getAccessToken();
-      if (token) {
-        const decoded: any = jwtDecode(token);
-        console.log("Dados do Token:", decoded);
+      setLoading(true);
 
-        setUsuario({
-          Id: decoded.Id || decoded.id,
-          Nome: decoded.nome || decoded.Nome || "Usuário",
-          Email: decoded.email || decoded.Email || "",
-          FotoPerfil: decoded.foto || "SEM_FOTO",
-          PlanoAtual: decoded.PlanoAtual || "FREE", 
-        });
-      } else {
+      const token = getAccessToken();
+      if (!token) {
         setUsuario(null);
+        return;
       }
-    } catch (err) {
-      console.error("Erro ao decodificar token:", err);
+
+      setAccessToken(token);
+
+      const response = await api.get("/Usuario/me");
+
+      const data = response.data;
+
+      const usuarioFormatado: Usuario = {
+        Id: data.Id,
+        Nome: capitalizeName(data.Nome),
+        Email: data.Email.toLowerCase(),
+        FotoPerfil: data.FotoPerfil,
+        PlanoAtual: data.PlanoAtual,
+      };
+
+      setUsuario(usuarioFormatado);
+    } catch (error) {
+      console.error("Erro ao carregar usuário:", error);
       setUsuario(null);
     } finally {
       setLoading(false);
@@ -87,17 +78,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = async () => {
-    setUsuarioState(null);
-    localStorage.removeItem("usuario");
+    setUsuario(null);
     await authLogout();
   };
 
   useEffect(() => {
-    const token = getAccessToken();
-    if (token) {
-      setAccessToken(token);
-    }
-
     refreshUser();
   }, []);
 
