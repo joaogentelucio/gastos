@@ -42,10 +42,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const setUsuario = (novoUsuario: any | null) => {
     if (novoUsuario) {
+      const nomeLimpo = novoUsuario.Nome || novoUsuario.unique_name || "Usuário";
+      const emailLimpo = novoUsuario.Email || novoUsuario.email || "";
+
       const usuarioFormatado: Usuario = {
         Id: novoUsuario.IdUsuario ?? novoUsuario.Id,
-        Nome: capitalizeName(novoUsuario.Nome),
-        Email: novoUsuario.Email.toLowerCase(),
+        Nome: capitalizeName(nomeLimpo),
+        Email: emailLimpo.toLowerCase(),
         FotoPerfil: novoUsuario.FotoPerfil,
         PlanoAtual: novoUsuario.PlanoAtual ?? "FREE",
       };
@@ -63,13 +66,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       const token = getAccessToken();
       if (token) {
         const decoded: any = jwtDecode(token);
-      
+        console.log("Dados do Token:", decoded);
+
         setUsuario({
-          Id: decoded.id || decoded.sub,
-          Nome: decoded.nome || decoded.name,
-          Email: decoded.email,
-          FotoPerfil: decoded.foto || decoded.plan || "FREE",
-          PlanoAtual: decoded.plano || decoded.plan || "FREE", 
+          Id: decoded.Id || decoded.id,
+          Nome: decoded.nome || decoded.Nome || "Usuário",
+          Email: decoded.email || decoded.Email || "",
+          FotoPerfil: decoded.foto || "SEM_FOTO",
+          PlanoAtual: decoded.PlanoAtual || "FREE", 
         });
       } else {
         setUsuario(null);
