@@ -3,13 +3,13 @@ import { FaCircleNotch } from "react-icons/fa";
 import styles from "@/styles/assinatura.module.css";
 import PlanoCard from "@/components/plano-card";
 import { createCheckout, openPortal } from "@/services/billing";
-import { useAuth } from "@/hooks/useAuth";
+import { useUser } from "@/context/UserContext";
 
 export default function Assinatura() {
-  const { user, loading: authLoading } = useAuth(); 
+  const { usuario, loading } = useUser(); 
   const [actionLoading, setActionLoading] = useState(false);
   
-  if (authLoading) {
+  if (loading) {
     return (
       <div className={styles.loadingContainer}>
         <FaCircleNotch className={styles.spinnerIcon} />
@@ -18,7 +18,7 @@ export default function Assinatura() {
     );
   }
 
-  const isPro = user?.planoAtual === "PRO";
+  const isPro = usuario?.PlanoAtual === "PRO";
 
    async function handleAction() {
     try {

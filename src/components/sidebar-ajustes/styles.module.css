@@ -1,5 +1,5 @@
 .sidebar {
-  width: 260px;
+  width: 220px;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -30,6 +30,11 @@
   cursor: pointer;
   opacity: 0.75;
   transition: opacity 0.2s;
+
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .backBtn:hover {
@@ -89,7 +94,7 @@
     width: 72px;
   }
   .menuItem span,
-  .logout span {
+  .logoutText {
     display: none;
   }
   .menuItem, 
@@ -99,6 +104,9 @@
     padding: 20px 0;
     gap: 0;
     text-align: center
+  }
+  .backBtn {
+    align-self: center; 
   }
   .logout {
     padding: 20px 0;
