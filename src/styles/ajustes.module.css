@@ -2,215 +2,24 @@
   display: flex;
   min-height: 100vh;
   width: 100%;
-  background-color: #181818;
-  color: #ffffff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden;
 }
 
-.sidebar {
-  width: 260px;
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  background: linear-gradient(180deg, #2a2a2a, #1f1f1f);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
-  box-sizing: border-box;
-}
-
-.navTop {
-  display: flex;
-  flex-direction: column;
-}
-
-.backBtn {
-  padding: 18px 22px;
-  font-size: 22px;
-  cursor: pointer;
-  opacity: 0.75;
-  transition: opacity 0.2s;
-}
-
-.backBtn:hover {
-  opacity: 1;
-}
-
-/* =========================
-   Menu
-========================= */
-.menuItem {
-  display: flex;
-  align-items: center;
-  padding: 14px 22px;
-  cursor: pointer;
-  gap: 14px;
-
-  border-left: 3px solid transparent;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.menuItem:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-left-color: #3498db;
-}
-
-.menuItem span {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  opacity: 0.85;
-}
-
-/* Logout */
-.logout {
-  background: none;
-  border: none;
-  color: #e74c3c;
-  font-weight: 600;
-  padding: 22px;
-  text-align: left;
-  cursor: pointer;
-  opacity: 0.85;
-  transition: opacity 0.2s;
-
-  white-space: normal;
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
-.logout:hover {
-  opacity: 1;
-}
-
-/* =========================
-   Conteúdo Principal
-========================= */
 .main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
   padding: 32px;
+
+  margin-left: 260px;
+  transition: margin-left 0.3s ease;
+  box-sizing: border-box;
 }
 
-/* =========================
-   Botão circular (Adicionar)
-========================= */
-.circleAdd {
-  width: 140px;
-  height: 140px;
-  background: linear-gradient(135deg, #2f2f2f, #1f1f1f);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 50px;
-
-  font-size: 64px;
-  cursor: pointer;
-
-  border: 2px dashed rgba(255, 255, 255, 0.15);
-  transition: transform 0.25s ease, border-color 0.25s ease;
-}
-
-.circleAdd:hover {
-  transform: scale(1.05);
-  border-color: #3498db;
-}
-
-/* =========================
-   Formulário
-========================= */
-.formGroup {
-  width: 100%;
-  max-width: 360px;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-
-/* Inputs */
-.inputRow {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding-bottom: 10px;
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.inputRow input {
-  background: transparent;
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 15px;
-  color: #ffffff;
-}
-
-.inputRow input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* =========================
-   Botão principal
-========================= */
-.btnAlterar {
-  margin-top: 30px;
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  color: white;
-  border: none;
-  padding: 14px 18px;
-  border-radius: 40px;
-
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-
-  width: 100%;
-  max-width: 200px;
-  align-self: center;
-
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btnAlterar:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(52, 152, 219, 0.35);
-}
-
-/* =========================
-   Responsividade
-========================= */
 @media (max-width: 768px) {
-  .sidebar {
-    width: 72px;
-  }
-
-  .menuItem span {
-    display: none;
-  }
-
-  .logout {
-    font-size: 11px;
-    padding: 16px 10px;
-    line-height: 1.2;
-    text-align: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .circleAdd {
-    width: 110px;
-    height: 110px;
-    font-size: 52px;
-  }
-
-  .formGroup {
-    gap: 22px;
+  .main {
+    margin-left: 72px;
+    padding: 24px 16px;
   }
 }
