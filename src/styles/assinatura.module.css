@@ -10,11 +10,33 @@
   margin-bottom: 24px;
 }
 
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh; 
+  color: #fff;
+  gap: 1rem;
+}
+
+.spinnerIcon {
+  font-size: 3rem;
+  color: #4f46e5; 
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .cards {
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
 }
+
 
 @media (max-width: 768px) {
   .cards {

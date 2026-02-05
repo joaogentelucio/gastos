@@ -1,7 +1,17 @@
-export function useAuth() {
-  const user = JSON.parse(
-    localStorage.getItem("user") || "null"
-  );
+import { useState, useEffect } from "react";
 
-  return { user };
+export function useAuth() {
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+    
+    setLoading(false);
+  }, []);
+
+  return { user, loading };
 }

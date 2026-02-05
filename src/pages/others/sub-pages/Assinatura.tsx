@@ -1,22 +1,29 @@
 import { useState } from "react";
+import { FaCircleNotch } from "react-icons/fa";
 import styles from "@/styles/assinatura.module.css";
 import PlanoCard from "@/components/plano-card";
 import { createCheckout, openPortal } from "@/services/billing";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Assinatura() {
-  const { user } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const { user, loading: authLoading } = useAuth(); 
+  const [actionLoading, setActionLoading] = useState(false);
   
+  if (authLoading) {
+    return (
+      <div className={styles.loadingContainer}>
+        <FaCircleNotch className={styles.spinnerIcon} />
+        <p>Sincronizando sua assinatura...</p>
+      </div>
+    );
+  }
+
   const isPro = user?.planoAtual === "PRO";
 
    async function handleAction() {
     try {
-      setLoading(true);
-
-      const url = isPro
-        ? await openPortal()
-        : await createCheckout();
+      setActionLoading(true);
+      const url = isPro ? await openPortal() : await createCheckout();
 
       if (url) {
         window.location.href = url;
@@ -24,7 +31,7 @@ export default function Assinatura() {
     } catch (err) {
       alert("Erro ao iniciar pagamento");
     } finally {
-      setLoading(false);
+      setActionLoading(false);
     }
   }
 
@@ -53,8 +60,8 @@ export default function Assinatura() {
             "Exportação de dados",
             "Suporte prioritário"
           ]}
-          buttonLabel={loading ? "Carregando..." : (isPro ? "Gerenciar Assinatura" : "Assinar agora")}
-          loading={loading}
+          buttonLabel={actionLoading ? "Carregando..." : (isPro ? "Gerenciar Assinatura" : "Assinar agora")}
+          loading={actionLoading}
           onAction={handleAction}
           highlight
         />

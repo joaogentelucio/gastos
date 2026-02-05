@@ -1,3 +1,4 @@
+import { FaCheck } from 'react-icons/fa';
 import styles from './styles.module.css';
 import { useUser } from "@/context/UserContext";
 import { useTheme } from '@/context/ThemeContext';
@@ -68,8 +69,9 @@ export default function PlanoCard({
 
       <ul className={styles.features}>
         {features.map((feature, index) => (
-          <li key={index} style={{ color: theme.colors.secondary }}>
-            ✔ {feature}
+          <li key={index} style={{ color: theme.colors.text }}>
+            <FaCheck style={{ color: theme.colors.primary, fontSize: '0.9rem' }} />
+            {feature}
           </li>
         ))}
       </ul>
