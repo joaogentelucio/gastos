@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { FaChevronDown } from 'react-icons/fa';
 import styles from '@/styles/despesas.module.css';
 import { useTheme } from '@/context/ThemeContext';
 import ImportModal from '@/components/import-modal';
@@ -95,7 +96,7 @@ export default function Despesas() {
               onClick={() => setIsImportMenuOpen(prev => !prev)}
               aria-label="Mais opções"
             >
-              ▼
+              <FaChevronDown className={isImportMenuOpen ? styles.rotated : ""} />
             </button>
           </div>
 

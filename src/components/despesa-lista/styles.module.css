@@ -21,7 +21,7 @@
 
 .card:hover {
   border-color: rgba(255, 255, 255, 0.1);
-  transform: translateX(5px); /* Feedback visual suave ao passar o mouse */
+  transform: translateX(5px);
 }
 
 .cardHeader {
@@ -77,4 +77,55 @@
   gap: 8px;
   font-size: 0.8rem;
   color: #888;
+}
+
+/* Mobile (até 575.98px) */
+@media (max-width: 575.98px) {
+  .value {
+    font-size: 1.3rem;
+  }
+  .card:active {
+    transform: scale(0.98); /* Feedback de toque */
+  }
+}
+
+/* Tablet (768px até 991.98px) */
+@media (min-width: 768px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  .cardHeader {
+    flex-direction: row; /* Título e data voltam a ficar lado a lado */
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .infoGrid {
+    grid-template-columns: repeat(2, 1fr); /* Divide em 2 colunas */
+  }
+}
+
+/* Desktop e Extra Large (992px+) */
+@media (min-width: 992px) {
+  .card {
+    max-width: 900px;
+    margin: 0 auto; /* Centraliza se o container for muito largo */
+  }
+
+  .card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(8px);
+    background: #252525;
+  }
+
+  .infoGrid {
+    grid-template-columns: repeat(3, auto); /* Itens lado a lado */
+    justify-content: flex-start;
+    gap: 32px;
+  }
+
+  .value {
+    font-size: 1.7rem;
+  }
 }
