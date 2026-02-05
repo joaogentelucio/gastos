@@ -3,54 +3,56 @@
 .header {
   margin-bottom: 2.5rem;
   text-align: left;
+  padding: 0 10px;
 }
 
 .header h2 {
-  font-size: 1.8rem;
+  font-size: clamp(1.4rem, 5vw, 1.8rem);
   font-weight: 700;
   margin-bottom: 0.5rem;
   letter-spacing: -0.5px;
 }
 
 .header p {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   max-width: 500px;
   line-height: 1.5;
+  opacity: 0.8;
 }
 
 .themeGrid {
   display: grid;
-  /* Cria colunas responsivas: se couber, lado a lado; se não, empilha */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
-  max-width: 900px;
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 .themeCard {
   cursor: pointer;
   border-radius: 16px;
   padding: 1rem;
-  border: 2px solid transparent; /* Reserva o espaço da borda */
+  border: 2px solid transparent; 
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   position: relative;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  height: 100%;
 }
 
-/* Estado de Hover: Leve subida e sombra mais forte */
 .themeCard:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
 }
 
-/* Quando o tema está selecionado */
 .themeCard.active {
-  border-color: #3b82f6; /* Cor de destaque (Primary) */
+  border-color: #3b82f6; 
   background-clip: padding-box;
 }
 
-/* Área de Preview (Simulação da Interface) */
 .preview {
   height: 140px;
   border-radius: 10px;
@@ -68,7 +70,6 @@
   width: 100%;
 }
 
-/* Info do Card (Texto e Ícones abaixo do preview) */
 .cardInfo {
   display: flex;
   justify-content: space-between;
@@ -93,7 +94,6 @@
   animation: scaleIn 0.3s ease-out;
 }
 
-/* Animação para o check aparecer suavemente */
 @keyframes scaleIn {
   from {
     transform: scale(0);
@@ -105,13 +105,47 @@
   }
 }
 
-/* Ajustes para telas bem pequenas */
-@media (max-width: 480px) {
-  .header h2 {
-    font-size: 1.5rem;
+@media (max-width: 768px) {
+  .header {
+    margin-bottom: 1.5rem;
   }
   
   .themeGrid {
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
+  .preview {
+    height: 120px; 
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    text-align: center; 
+  }
+  .header p {
+    margin: 0 auto;
+  }
+  .themeGrid {
     grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+  .preview {
+    height: 140px; 
+  }
+  .labelGroup {
+    font-size: 0.9rem; 
+  }
+}
+
+@media (max-width: 320px) {
+  .themeCard {
+    padding: 0.75rem;
+  }
+  
+  .labelGroup span {
+    font-size: 0.8rem;
   }
 }
