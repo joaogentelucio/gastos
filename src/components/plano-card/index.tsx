@@ -4,12 +4,13 @@ import { useTheme } from '@/context/ThemeContext';
 
 type PlanCardProps = {
   title: "FREE" | "PRO";
-   price: string;
+  price: string;
   features: string[];
   buttonLabel: string;
   loading?: boolean;
   onAction: () => void;
   highlight?: boolean;
+  disabled?: boolean;
 };
 
 export default function PlanoCard({
@@ -19,7 +20,8 @@ export default function PlanoCard({
   buttonLabel,
   loading = false,
   onAction,
-  highlight = false
+  highlight = false,
+  disabled = false
 }: PlanCardProps) {
   const { usuario } = useUser();
   const { theme } = useTheme();
@@ -43,7 +45,7 @@ export default function PlanoCard({
           className={styles.badge}
           style={{
             backgroundColor: theme.colors.primary,
-            color: theme.colors.primary
+            color: theme.colors.text
           }}
         >
           Recomendado
@@ -74,15 +76,13 @@ export default function PlanoCard({
 
       <button
         onClick={onAction}
-        disabled={loading || isActive}
+        disabled={loading || isActive || disabled}
         className={styles.button}
         style={{
           backgroundColor: isActive
             ? theme.colors.inactive
             : theme.colors.primary,
-          color: isActive
-            ? theme.colors.secondary
-            : theme.colors.primary,
+          color: theme.colors.text,
           cursor: loading || isActive ? "not-allowed" : "pointer"
         }}
       >

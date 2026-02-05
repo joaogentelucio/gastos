@@ -18,7 +18,9 @@ export default function Assinatura() {
         ? await openPortal()
         : await createCheckout();
 
-      window.location.href = url;
+      if (url) {
+        window.location.href = url;
+      }
     } catch (err) {
       alert("Erro ao iniciar pagamento");
     } finally {
@@ -38,19 +40,20 @@ export default function Assinatura() {
             "Controle básico de gastos",
             "Relatórios simples"
           ]}
-          buttonLabel="Plano atual"
+          buttonLabel={isPro ? "Plano Base" : "Plano Atual"}
+          disabled={true}
           onAction={() => {}}
         />
 
         <PlanoCard
           title="PRO"
-          price="R$ XX / mês"
+          price="R$ 9,90 / mês"
           features={[
             "Relatórios avançados",
             "Exportação de dados",
             "Suporte prioritário"
           ]}
-          buttonLabel="Assinar agora"
+          buttonLabel={loading ? "Carregando..." : (isPro ? "Gerenciar Assinatura" : "Assinar agora")}
           loading={loading}
           onAction={handleAction}
           highlight
