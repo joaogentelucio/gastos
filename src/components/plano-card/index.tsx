@@ -87,7 +87,7 @@ export default function PlanoCard({
             ? theme.colors.inactive
             : theme.colors.primary,
           color: theme.colors.text,
-          cursor: isButtonDisabled ? "not-allowed" : "pointer"
+          cursor: isButtonDisabled ? "not-allowed" : "pointer"  
         }}
       >
         {loading ? "Aguarde..." : buttonLabel}
