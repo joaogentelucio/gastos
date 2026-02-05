@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 import { getAccessToken, setAccessToken } from "@/services/auth-token";
 import { Logout as authLogout } from "@/services/logout-service";
 
@@ -30,7 +31,13 @@ const capitalizeName = (nome: string) =>
     .join(" ");
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [usuario, setUsuarioState] = useState<Usuario | null>(null);
+  const [usuario, setUsuarioState] = useState<Usuario | null>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("usuario");
+      return saved ? JSON.parse(saved) : null;
+    }
+    return null;
+  });
   const [loading, setLoading] = useState(true);
 
   const setUsuario = (novoUsuario: any | null) => {
@@ -53,18 +60,22 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const refreshUser = async () => {
     try {
-      const response = await fetch("/api/auth/me", {
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${getAccessToken()}`
-        }
-      });
-
-      if (!response.ok) throw new Error();
-
-      const data = await response.json();
-      setUsuario(data.usuario);
-    } catch {
+      const token = getAccessToken();
+      if (token) {
+        const decoded: any = jwtDecode(token);
+      
+        setUsuario({
+          Id: decoded.id || decoded.sub,
+          Nome: decoded.nome || decoded.name,
+          Email: decoded.email,
+          FotoPerfil: decoded.foto || decoded.plan || "FREE",
+          PlanoAtual: decoded.plano || decoded.plan || "FREE", 
+        });
+      } else {
+        setUsuario(null);
+      }
+    } catch (err) {
+      console.error("Erro ao decodificar token:", err);
       setUsuario(null);
     } finally {
       setLoading(false);
