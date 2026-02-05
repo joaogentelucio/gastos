@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from '@/styles/despesas.module.css';
+import { useTheme } from '@/context/ThemeContext';
 import ImportModal from '@/components/import-modal';
 import Modal from '@/components/modal';
 import api from '@/services/api';
@@ -8,18 +9,16 @@ import DespesaList from '@/components/despesa-lista';
 import { Loading } from '@/components/loading';
 
 export default function Despesas() {
+  const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [despesas, setDespesas] = useState<Despesa[]>([]);
 
-  // Estados de UI
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isImportMenuOpen, setIsImportMenuOpen] = useState(false);
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
-  // Ref para fechar dropdown ao clicar fora
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  // Estados do formulário
   const [expenseName, setExpenseName] = useState('');
   const [expenseValue, setExpenseValue] = useState('');
   const [tipoDespesa, setTipoDespesa] = useState<Despesa['TipoDespesa'] | ''>('');
@@ -31,7 +30,6 @@ export default function Despesas() {
     carregarDespesas();
   }, []);
 
-  // Fecha dropdown ao clicar fora
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -73,7 +71,7 @@ export default function Despesas() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ backgroundColor: theme.colors.background }}>
       {isLoading && <Loading />}
 
       <div className={styles.topSection}>
@@ -83,6 +81,7 @@ export default function Despesas() {
           <div className={styles.splitButton}>
             <button
               className={styles.mainButton}
+              style={{ backgroundColor: theme.colors.success }}
               onClick={() => {
                 setIsImportMenuOpen(false);
                 setIsCreateModalOpen(true);
@@ -119,7 +118,6 @@ export default function Despesas() {
         <DespesaList despesas={despesas} />
       </div>
 
-      {/* Modal de criação */}
       <Modal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
@@ -139,7 +137,6 @@ export default function Despesas() {
         onSave={handleCreateDespesa}
       />
 
-      {/* Modal de importação */}
       <ImportModal
         isOpen={isImportModalOpen}
         onClose={() => setIsImportModalOpen(false)}
