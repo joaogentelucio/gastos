@@ -12,6 +12,8 @@ export function SidebarAjustes() {
 
     const [origemFixa] = useState(location.state?.from || '/dashboard');
 
+    const isActive = (path: string) => location.pathname.includes(path);
+
     const handleBack = () => {
         navigate(origemFixa);
     };
@@ -22,21 +24,21 @@ export function SidebarAjustes() {
             <FaChevronLeft />
           </div>
           
-          <div className={styles.menuItem} onClick={() => navigate('perfil')} style={{ color: theme.colors.text}}>
+          <div className={`${styles.menuItem} ${isActive('perfil') ? styles.active : ''}`} onClick={() => navigate('perfil')} style={{ color: theme.colors.text}}>
             <FaUser size={22} />
             <span>Perfil</span>
           </div>
 
-          <div className={styles.menuItem} onClick={() => navigate('temas')} style={{ color: theme.colors.text}}>
+          <div className={`${styles.menuItem} ${isActive('temas') ? styles.active : ''}`} onClick={() => navigate('temas')} style={{ color: theme.colors.text}}>
             <FaBrush size={22} />
             <span>Tema</span>
           </div>
           
-          <div className={styles.menuItem} onClick={() => navigate('notificacoes')} style={{ color: theme.colors.text}}>
+          <div className={`${styles.menuItem} ${isActive('notificacoes') ? styles.active : ''}`} onClick={() => navigate('notificacoes')} style={{ color: theme.colors.text}}>
             <FaBell size={22} />
             <span>Notificações</span>
           </div>
-          <div className={styles.menuItem} onClick={() => navigate('assinatura')} style={{ color: theme.colors.text}}>
+          <div className={`${styles.menuItem} ${isActive('assinatura') ? styles.active : ''}`} onClick={() => navigate('assinatura')} style={{ color: theme.colors.text}}>
             <FaCreditCard size={22} />
             <span>Assinatura</span>
           </div>

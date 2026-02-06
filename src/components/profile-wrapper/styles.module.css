@@ -1,0 +1,117 @@
+.profileWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.profileTrigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 12px; /* Bordas mais suaves */
+  transition: all 0.2s ease;
+}
+
+/* O hover agora é mais sutil, ideal para o modo dark ou light */
+.profileTrigger:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.fotoPerfil {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid; /* A cor vem do inline style do theme */
+  transition: transform 0.2s ease;
+}
+
+.profileTrigger:hover .fotoPerfil {
+  transform: scale(1.05);
+}
+
+.arrowIcon {
+  font-size: 12px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+/* Container do Dropdown Unificado */
+.menuHeader {
+  position: absolute;
+  top: calc(100% + 12px); 
+  right: 0;
+  width: 260px; /* Largura mais equilibrada */
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  animation: slideIn 0.2s ease-out;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 12px;
+  border-bottom: 1px solid; /* Cor definida pelo theme.colors.bottom */
+}
+
+.userName {
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.userSystem {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  margin-top: 2px;
+}
+
+.menuActions {
+  display: flex;
+  flex-direction: column;
+}
+
+.menuActions a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: block;
+}
+
+/* Hover no link usando leve transparência do fundo */
+.menuActions a:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  padding-left: 14px; /* Efeito de deslocamento suave */
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade: No mobile o menu centraliza ou alinha à direita com margem */
+@media (max-width: 480px) {
+  .menuHeader {
+    width: 220px;
+    right: -10px;
+  }
+}
