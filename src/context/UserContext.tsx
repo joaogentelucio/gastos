@@ -11,6 +11,7 @@ type Usuario = {
   Email: string;
   FotoPerfil: string;
   PlanoAtual: Plano;
+  RenovaAutomatico?: boolean; 
 };
 
 type UserContextType = {
@@ -66,6 +67,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         Email: data.Email.toLowerCase(),
         FotoPerfil: data.FotoPerfil,
         PlanoAtual: data.PlanoAtual,
+        RenovaAutomatico: data.RenovaAutomatico,
       };
 
       setUsuario(usuarioFormatado);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaCircleNotch } from "react-icons/fa";
+import { FaCircleNotch, FaInfoCircle } from "react-icons/fa";
 import styles from "@/styles/assinatura.module.css";
 import PlanoCard from "@/components/plano-card";
 import { createCheckout, openPortal } from "@/services/billing";
@@ -8,6 +8,9 @@ import { useUser } from "@/context/UserContext";
 export default function Assinatura() {
   const { usuario, loading } = useUser(); 
   const [actionLoading, setActionLoading] = useState(false);
+
+  const isPro = usuario?.PlanoAtual === "PRO";
+  const isPendingCancellation = isPro && usuario?.RenovaAutomatico === false;
   
   if (loading) {
     return (
@@ -18,9 +21,16 @@ export default function Assinatura() {
     );
   }
 
-  const isPro = usuario?.PlanoAtual === "PRO";
+  if (loading) {
+    return (
+      <div className={styles.loadingContainer}>
+        <FaCircleNotch className={styles.spinnerIcon} />
+        <p>Sincronizando sua assinatura...</p>
+      </div>
+    );
+  }
 
-   async function handleAction() {
+  async function handleAction() {
     try {
       setActionLoading(true);
       const url = isPro ? await openPortal() : await createCheckout();
@@ -35,9 +45,30 @@ export default function Assinatura() {
     }
   }
 
+  const getProButtonLabel = () => {
+    if (actionLoading) return "Carregando...";
+    if (isPendingCancellation) return "Reativar Assinatura";
+    if (isPro) return "Gerenciar Plano";
+    return "Assinar agora";
+  };
+
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Planos</h1>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Escolha seu Plano</h1>
+        <p className={styles.subtitle}>Gerencie sua assinatura e acesse recursos exclusivos.</p>
+      </header>
+
+      {/* Banner de Alerta: Aparece apenas quando a renovação está desligada */}
+      {isPendingCancellation && (
+        <div className={styles.pendingAlert}>
+          <FaInfoCircle />
+          <div className={styles.alertText}>
+            <strong>Cancelamento em processamento:</strong>
+            <p>Sua assinatura PRO está ativa, mas não será renovada. Você terá acesso aos recursos até o fim do ciclo atual.</p>
+          </div>
+        </div>
+      )}
 
       <div className={styles.cards}>
         <PlanoCard
@@ -45,7 +76,8 @@ export default function Assinatura() {
           price="R$ 0"
           features={[
             "Controle básico de gastos",
-            "Relatórios simples"
+            "Relatórios simples",
+            "Acesso via Web"
           ]}
           buttonLabel={isPro ? "Plano Base" : "Plano Atual"}
           disabled={true}
@@ -57,13 +89,14 @@ export default function Assinatura() {
           price="R$ 9,90 / mês"
           features={[
             "Relatórios avançados",
-            "Exportação de dados",
-            "Suporte prioritário"
+            "Exportação de dados (CSV/Excel)",
+            "Suporte prioritário",
+            "Sem anúncios"
           ]}
-          buttonLabel={actionLoading ? "Carregando..." : (isPro ? "Gerenciar Assinatura" : "Assinar agora")}
+          buttonLabel={getProButtonLabel()}
           loading={actionLoading}
           onAction={handleAction}
-          highlight
+          highlight={isPro && !isPendingCancellation} // Remove o destaque se estiver cancelado
         />
       </div>
     </div>
