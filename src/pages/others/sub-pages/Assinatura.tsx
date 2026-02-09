@@ -40,6 +40,7 @@ export default function Assinatura() {
       }
     } catch (err) {
       alert("Erro ao iniciar pagamento");
+      console.error(err);
     } finally {
       setActionLoading(false);
     }
