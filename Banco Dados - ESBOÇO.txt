@@ -43,11 +43,13 @@ where us.id_usuario = 1;
 
 
 select * from usuarios use
-where use.id_usuario = 1;
+where use.id_usuario = 6;
+
+select * from usuarios;
 select * from assinaturas;
 
 DELETE FROM ASSINATURAS 
-WHERE ID_ASSINATURA = 1;
+WHERE ID_ASSINATURA = 2;
 
 CREATE TABLE DESPESAS (
     ID_DESPESA SERIAL PRIMARY KEY,
