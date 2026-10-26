@@ -63,8 +63,8 @@ export function GraficoCategorias() {
   if (loading) return <div className={styles.loading}>Carregando...</div>;
   if (erro) return <div className={styles.error}>{erro}</div>;
 
-  const total = dados.reduce((sum, d) => sum + d.value, 0);
-  let startAngle = 0;
+  const total = dados.reduce((sum, d) => sum + Number(d.value || 0), 0);
+  let startAngle = 0;\n  const percent = (value: number) => `${Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 1 })}%`;
 
   const ativo =
     activeIndex !== null
@@ -78,7 +78,7 @@ export function GraficoCategorias() {
       <svg width="280" height="280" viewBox="0 0 280 280">
         <g>
           {dados.map((item, index) => {
-            const angle = (item.value / total) * 360;
+            const angle = (Number(item.value) / total) * 360;
             const endAngle = startAngle + angle;
 
             const path = createArc(
@@ -112,7 +112,7 @@ export function GraficoCategorias() {
           textAnchor="middle"
           className={styles.centerTextTitle}
         >
-          {ativo.name}
+          {ativo.name.length > 17 ? `${ativo.name.slice(0, 16)}…` : ativo.name}
         </text>
         <text
           x="140"
@@ -120,7 +120,7 @@ export function GraficoCategorias() {
           textAnchor="middle"
           className={styles.centerTextValue}
         >
-          {ativo.value}%
+          {percent(Number(ativo.value))}
         </text>
       </svg>
     </div>
