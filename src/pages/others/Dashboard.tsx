@@ -116,7 +116,7 @@ export default function Dashboard() {
                   <CartesianGrid strokeDasharray="3 5" vertical={false} stroke={theme.colors.grey21} />
                   <XAxis dataKey="month" tickLine={false} axisLine={false} stroke={theme.colors.text} />
                   <YAxis tickLine={false} axisLine={false} stroke={theme.colors.text} width={75} tickFormatter={value => new Intl.NumberFormat('pt-BR', { notation: 'compact' }).format(value)} />
-                  <Tooltip formatter={value => money(Number(value ?? 0))} contentStyle={{ background: theme.colors.background2, borderColor: theme.colors.grey21, borderRadius: 12, color: theme.colors.text }} />
+                  <Tooltip cursor={false} formatter={value => money(Number(value ?? 0))} contentStyle={{ background: theme.colors.background2, borderColor: theme.colors.grey21, borderRadius: 12, color: theme.colors.text }} />
                   <Bar dataKey="Despesas" fill="#388747" radius={[8, 8, 0, 0]} maxBarSize={56} />
                 </BarChart>
               </ResponsiveContainer>
