@@ -64,7 +64,8 @@ export function GraficoCategorias() {
   if (erro) return <div className={styles.error}>{erro}</div>;
 
   const total = dados.reduce((sum, d) => sum + Number(d.value || 0), 0);
-  let startAngle = 0;\n  const percent = (value: number) => `${Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 1 })}%`;
+  let startAngle = 0;
+  const percent = (value: number) => `${Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 1 })}%`;
 
   const ativo =
     activeIndex !== null
