@@ -29,7 +29,8 @@
 .centerTextValue {
   fill: #ffffff;
   font-size: 23px;
-  font-weight: bold;\n  font-variant-numeric: tabular-nums;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
 }
 
 .loading { color: #fff; padding: 20px; }
