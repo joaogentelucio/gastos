@@ -1,90 +1,23 @@
-.container {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-}
-
-.mainContent {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  padding-top: 80px;
-}
-
-/* =========================
-   KPIs
-========================= */
-
-.kpiContainer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-/* Responsividade KPIs */
-@media (max-width: 1024px) {
-  .kpiContainer {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .kpiContainer {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =========================
-   Gráficos e blocos
-========================= */
-
-.reportBlock {
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* Título do bloco */
-.reportBlock h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-/* Placeholder de gráfico */
-.chartPlaceholder {
-  height: 260px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.95rem;
-  opacity: 0.6;
-}
-
-/* =========================
-   Ajustes mobile finos
-========================= */
-
-@media (max-width: 480px) {
-  .container {
-    padding: 16px;
-  }
-
-  .mainContent {
-    gap: 24px;
-  }
-
-  .reportBlock {
-    padding: 16px;
-  }
-
-  .chartPlaceholder {
-    height: 200px;
-  }
-}
+.container{width:100%;min-height:100%;padding:28px 24px;box-sizing:border-box}
+.mainContent{width:100%;max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.heading{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.heading h1{margin:0 0 6px;font-size:1.65rem}.heading p,.panelHead p{margin:0;opacity:.7;font-size:.9rem}
+.monthPicker{display:flex;flex-direction:column;gap:6px;font-size:.8rem}
+.monthPicker select{padding:10px 13px;border:1px solid #7775;border-radius:10px;background:var(--card-bg,transparent);color:inherit;font:inherit;min-width:200px}
+.monthPicker option{color:#111;background:#fff}
+.kpiContainer{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.kpi,.panel{border:1px solid #8884;border-radius:14px;background:color-mix(in srgb,currentColor 3%,transparent)}
+.kpi{display:flex;flex-direction:column;gap:7px;padding:18px 20px;min-height:110px;box-sizing:border-box}
+.kpi>span{font-size:.87rem;opacity:.8}.kpi strong{font-size:1.65rem;font-weight:700;font-variant-numeric:tabular-nums}
+.kpi small{font-size:.78rem;opacity:.7}.mutedValue{opacity:.55}
+.panel{padding:20px;min-width:0}.panelHead{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.panel h2{margin:0 0 6px;font-size:1.12rem}.chartArea{height:350px;min-width:0}
+.empty{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;opacity:.7}
+.note{font-size:.78rem;opacity:.65;margin:12px 0 0}
+.historyList{display:flex;flex-direction:column;max-height:410px;overflow-y:auto}
+.historyRow{display:grid;grid-template-columns:minmax(120px,1fr) minmax(100px,1fr) auto;gap:12px;align-items:center;text-align:left;width:100%;background:transparent;color:inherit;border:0;border-bottom:1px solid #8883;padding:14px 10px;cursor:pointer;font:inherit}
+.historyRow:hover,.historyActive{background:#648cff1a}.historyActive{box-shadow:inset 3px 0 #4169e1}
+.historyMonth{text-transform:capitalize}.historyCount{opacity:.65;font-size:.85rem}.historyRow strong{font-variant-numeric:tabular-nums}
+.categories{margin-top:4px}.error{padding:14px;border:1px solid #cf4455;border-radius:12px;color:#d85566}
+.error button{margin-left:10px}
+@media(max-width:640px){.container{padding:18px 12px}.heading h1{font-size:1.3rem}.monthPicker,.monthPicker select{width:100%}.kpiContainer{gap:9px}.kpi{padding:14px;min-height:108px}.kpi strong{font-size:1.25rem}.kpi small{font-size:.7rem}.panel{padding:14px}.chartArea{height:265px}.historyRow{grid-template-columns:1fr auto;gap:4px}.historyCount{grid-column:1;grid-row:2}.historyRow strong{grid-column:2;grid-row:1 / span 2}}
