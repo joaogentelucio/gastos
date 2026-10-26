@@ -107,7 +107,8 @@ export default function Dashboard() {
           <article className={styles.kpi}><span>Saldo disponível</span><strong className={styles.mutedValue}>—</strong><small>Disponível após implementar receitas</small></article>
           <article className={styles.kpi}><span>{isCurrent ? 'Próximo mês' : 'Previsão para o próximo mês'}</span><strong>{loading ? 'Carregando...' : isCurrent && forecast !== null ? money(forecast) : '—'}</strong><small>{isCurrent ? 'Estimativa atual da API' : 'Previsões históricas não disponíveis'}</small></article>
         </section>
-        <section className={styles.panel}>
+        <div className={styles.chartsGrid}>
+          <section className={styles.panel}>
           <div className={styles.panelHead}><div><h2>Fluxo de caixa mensal</h2><p>Histórico de despesas dos últimos 6 meses até o período selecionado</p></div></div>
           <div className={styles.chartArea}>
             {!loading && chartRows.some(row => row.Despesas > 0) ? (
@@ -123,7 +124,9 @@ export default function Dashboard() {
             ) : <div className={styles.empty}>{loading ? 'Carregando histórico...' : 'Nenhuma despesa encontrada neste período.'}</div>}
           </div>
           <p className={styles.note}>As receitas e o saldo serão exibidos quando houver cadastro de receitas. Nenhum valor é estimado como receita.</p>
-        </section>
+          </section>
+          <section className={styles.categories}><GraficoCategorias /></section>
+        </div>
         <section className={styles.panel}>
           <div className={styles.panelHead}><div><h2>Histórico de meses anteriores</h2><p>Selecione um mês para consultar o total e atualizar o gráfico.</p></div></div>
           <div className={styles.historyList}>
@@ -136,7 +139,6 @@ export default function Dashboard() {
             ))}
           </div>
         </section>
-        {isCurrent && <section className={styles.categories}><GraficoCategorias /></section>}
       </main>
     </div>
   );
