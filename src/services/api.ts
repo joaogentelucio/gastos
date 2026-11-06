@@ -12,7 +12,7 @@ const processQueue = (error: any, token: string | null = null) => {
 };
 
 const api = axios.create({
-  baseURL: 'https://gastosservice-ovgk.onrender.com/api/', 
+  baseURL: '/api/', 
   timeout: 5000,
   withCredentials: true, 
   headers: {
@@ -37,7 +37,9 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (originalRequest.url?.includes("Auth/auto-login")) {
+    if (originalRequest.url?.includes("Auth/auto-login") ||
+        originalRequest.url?.includes("RecuperacaoSenha/") ||
+        originalRequest.url?.includes("Auth/alterar-senha")) {
       return Promise.reject(error);
     }
     

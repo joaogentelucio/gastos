@@ -5,6 +5,7 @@ import AppLayout from "@/layouts/app-layout";
 
 import Login from '@/pages/auth/sign-in'
 import Register from '@/pages/auth/sign-up'
+import RecuperarSenha from '@/pages/auth/forgot-password'
 
 import Dashboard from "@/pages/others/Dashboard";
 import Despesas from "@/pages/others/Despesas";
@@ -41,6 +42,7 @@ export default function OthersRoutes() {
                 
                 <Route path="login" element={usuario ? <Navigate to="dashboard"/> : <Login />} />
                 <Route path="register" element={usuario ? <Navigate to="dashboard"/> : <Register />} />
+                <Route path="recuperarSenha" element={<RecuperarSenha />} />
             
                 <Route path="*" element={<Navigate to={usuario ? "/dashboard" : "/login"} replace />} />
             </Routes>
