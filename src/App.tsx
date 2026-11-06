@@ -26,24 +26,20 @@ export default function App() {
       return;
     }
 
-    let ativo = true;
     async function validarSessao() {
       try {
         const usuario = await autoLogin();
-        if (ativo && usuario) setUsuario(usuario);
+        if (usuario) setUsuario(usuario);
       } catch (error: unknown) {
         // A missing/expired session is expected for signed-out visitors.
         // ProtectedRoute redirects them to the login page.
-        if (ativo) {
-          console.info("Nenhuma sessão ativa disponível para restauração.");
-        }
+        console.info("Nenhuma sessão ativa disponível para restauração.");
       } finally {
-        if (ativo) setEstaInicializando(false);
+        setEstaInicializando(false);
       }
     }
 
     void validarSessao();
-    return () => { ativo = false; };
   }, [pathname, setUsuario]);
 
   if (estaInicializando) {
