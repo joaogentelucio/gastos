@@ -37,7 +37,9 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (originalRequest.url?.includes("Auth/auto-login")) {
+    if (originalRequest.url?.includes("Auth/auto-login") ||
+        originalRequest.url?.includes("RecuperacaoSenha/") ||
+        originalRequest.url?.includes("Auth/alterar-senha")) {
       return Promise.reject(error);
     }
     
