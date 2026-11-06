@@ -7,7 +7,6 @@ import { Login } from "@/services/auth-service";
 export function useLoginForm() {
   const navigate = useNavigate();
   const { setUsuario } = useUser();
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -47,7 +46,7 @@ export function useLoginForm() {
 
     setLoading(true);
     try {
-      const [{usuario}] = await Promise.all([ Login(email, senha), delay(5000)]);
+      const { usuario } = await Login(email, senha);
 
       setUsuario(usuario);
 
